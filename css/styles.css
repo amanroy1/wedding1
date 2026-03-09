@@ -1,0 +1,893 @@
+@import url('https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,600;1,6..96,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080610;
+  --gold: #c9a84c;
+  --crimson: #8b1a1a;
+  --cream: #f5edd6;
+  --saffron: #c4651a;
+  --font-display: 'Bodoni Moda', serif;
+  --font-names: 'Ballet', cursive;
+  --font-body: 'Jost', sans-serif;
+  --font-wedding: 'Cormorant Garamond', serif;
+}
+
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* GRAIN */
+#grain {
+  position: fixed; inset: 0; z-index: 9997;
+  pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* CURSOR */
+#cursor {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold); position: fixed;
+  pointer-events: none; z-index: 9999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+/* SCROLL BAR */
+#scroll-bar {
+  position: fixed; top: 0; left: 0; height: 1px;
+  background: var(--gold); z-index: 9990; width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* ====== LOADING ====== */
+#loading {
+  position: fixed; inset: 0; z-index: 9000;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2rem;
+  transition: opacity 0.9s ease;
+}
+
+.l-petal { opacity: 0; animation: petalIn 0.5s ease forwards; }
+@keyframes petalIn { to { opacity: 1; } }
+
+#loading-text {
+  font-family: var(--font-display); font-style: italic;
+  font-weight: 300; font-size: 0.9rem;
+  color: var(--gold); letter-spacing: 0.5em;
+}
+
+#bar-track { width: 180px; height: 1px; background: rgba(201,168,76,0.2); }
+#bar-fill { height: 100%; width: 0%; background: var(--gold); transition: width 0.25s ease; }
+
+/* ====== HERO ====== */
+#hero { height: 500vh; position: relative; }
+
+.sticky-wrap {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+}
+
+.sticky-wrap::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 50% 50% at 50% 45%, rgba(120,85,30,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#frame-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  z-index: 1;
+  mask-image: radial-gradient(ellipse 85% 85% at 50% 48%, black 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 48%, black 55%, transparent 100%);
+}
+
+#scroll-overlay {
+  position: absolute; left: 50%; top: 68%;
+  transform: translate(-50%, -50%);
+  text-align: center; opacity: 0;
+  transition: opacity 0.15s ease-out;
+  pointer-events: none;
+  width: max-content; max-width: 90vw;
+}
+#scroll-overlay.visible { opacity: 1; }
+/* When schedule is shown, soften scroll overlay so schedule panel is the focus */
+#hero:has(#schedule-overlay.visible) #scroll-overlay.visible { opacity: 0.35; }
+
+.ov-sanskrit {
+  display: block; font-family: var(--font-display);
+  font-size: clamp(0.6rem, 0.9vw, 0.8rem);
+  color: #7a1212; letter-spacing: 0.6em;
+  margin-bottom: 1rem;
+}
+.ov-names {
+  display: block; font-family: var(--font-display);
+  font-style: italic; font-weight: 400;
+  font-size: clamp(2.4rem, 7vw, 7rem);
+  color: #5a0d0d; letter-spacing: 0.03em; line-height: 1;
+  text-shadow: 0 2px 12px rgba(90,13,13,0.15);
+  transition: text-shadow 0.4s ease;
+  white-space: nowrap;
+}
+.ov-names:hover { text-shadow: 0 2px 20px rgba(90,13,13,0.3); }
+.ov-date {
+  display: block; font-family: var(--font-body);
+  font-weight: 300; font-size: clamp(0.6rem, 0.9vw, 0.78rem);
+  color: #7a5010; letter-spacing: 0.65em; margin-top: 0.9rem;
+}
+.ov-location {
+  display: block; font-family: var(--font-body);
+  font-weight: 200; font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+  color: #7a5010; letter-spacing: 0.5em; margin-top: 0.4rem;
+  text-transform: uppercase; opacity: 0.75;
+}
+
+/* ====== SEAL BUTTON ====== */
+#seal-btn {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: transparent; border: none;
+  cursor: pointer; pointer-events: auto; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.6s ease;
+}
+#seal-btn.hidden { opacity: 0; pointer-events: none; }
+.seal-ring { display: none; }
+.seal-ring-2 { display: none; }
+.seal-label {
+  font-family: var(--font-body);
+  font-size: clamp(0.55rem, 1.2vw, 0.7rem);
+  letter-spacing: 0.2em;
+  color: rgba(245,237,214,0.85);
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.95), 0 0 16px rgba(0,0,0,0.7);
+}
+
+/* ====== INTRO TEXT ====== */
+#intro-text {
+  position: absolute; bottom: 3vh; left: 50%;
+  transform: translateX(-50%);
+  text-align: center; z-index: 5;
+  opacity: 1; transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+#intro-text.hidden { opacity: 0; }
+.intro-invited {
+  display: block; font-family: var(--font-body);
+  font-weight: 200; font-size: clamp(0.55rem, 0.9vw, 0.75rem);
+  color: rgba(201,168,76,0.6); letter-spacing: 0.5em;
+  text-transform: uppercase; margin-bottom: 0.8rem;
+}
+.intro-names {
+  display: block; font-family: var(--font-display);
+  font-style: italic; font-weight: 400;
+  font-size: clamp(1.8rem, 5vw, 4rem);
+  color: var(--cream); letter-spacing: 0.04em;
+  text-shadow: 0 0 40px rgba(201,168,76,0.15);
+  white-space: nowrap;
+}
+
+/* ====== REVEAL ====== */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ====== DIVIDER ====== */
+#divider { width: 100%; max-width: 100%; padding: 0; overflow: hidden; }
+.svg-divider { width: 100%; display: block; }
+.dp {
+  stroke-dasharray: 5000;
+  stroke-dashoffset: 5000;
+  transition: stroke-dashoffset 2.2s ease;
+}
+.svg-divider.visible .dp { stroke-dashoffset: 0; }
+
+/* ====== STORY ====== */
+#story { padding: clamp(4rem,8vw,9rem) clamp(1.5rem,6vw,7rem); max-width: 1400px; margin: 0 auto; }
+.story-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(2rem,5vw,7rem); align-items: start; }
+
+.s-label {
+  font-family: var(--font-body); font-size: 0.62rem;
+  letter-spacing: 0.55em; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 2rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.s-label::after { content: ''; display: block; width: 36px; height: 1px; background: var(--gold); opacity: 0.5; }
+
+.pull-quote {
+  font-family: var(--font-display); font-style: italic;
+  font-weight: 400; font-size: clamp(1.9rem,3.2vw,3rem);
+  color: var(--cream); line-height: 1.35; margin-bottom: 1.4rem;
+}
+.pull-sub {
+  font-family: var(--font-body); font-weight: 300;
+  font-size: clamp(0.82rem,1vw,0.95rem);
+  color: rgba(245,237,214,0.55); line-height: 1.9; max-width: 380px;
+}
+.bihar-row {
+  margin-top: 2.8rem; display: flex; align-items: center; gap: 0.9rem; opacity: 0.75;
+}
+.bihar-text {
+  font-family: var(--font-display); font-size: 1.35rem;
+  color: var(--saffron); letter-spacing: 0.04em;
+}
+
+/* Timeline */
+.timeline { position: relative; padding-left: 2rem; border-left: 1px solid rgba(201,168,76,0.3); }
+.t-beat { position: relative; margin-bottom: 2.8rem; }
+.t-beat:last-child { margin-bottom: 0; }
+.t-node { position: absolute; left: -2.38rem; top: 0.05rem; }
+.t-year {
+  font-family: var(--font-body); font-size: 0.62rem;
+  letter-spacing: 0.45em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.35rem;
+}
+.t-title {
+  font-family: var(--font-display); font-style: italic;
+  font-size: clamp(1rem,1.4vw,1.35rem); color: var(--cream); margin-bottom: 0.25rem;
+}
+.t-desc {
+  font-family: var(--font-body); font-weight: 300;
+  font-size: 0.78rem; color: rgba(245,237,214,0.45); line-height: 1.7;
+}
+.kn-row {
+  margin-top: 2.5rem; display: flex; align-items: center; gap: 0.8rem; opacity: 0.6;
+}
+.kn-text { font-family: var(--font-display); font-size: 1.25rem; color: #6aaf82; letter-spacing: 0.04em; }
+
+/* ====== SAVE THE DATE ====== */
+#save-date {
+  padding: clamp(5rem,9vw,10rem) clamp(1.5rem,6vw,7rem);
+  text-align: center; display: flex; flex-direction: column; align-items: center;
+}
+.std-label {
+  font-family: var(--font-display); font-variant: small-caps;
+  font-size: clamp(0.8rem,1.1vw,1rem); color: var(--gold);
+  letter-spacing: 0.45em; margin-bottom: 3rem;
+}
+.mandala-wrap {
+  position: relative; width: clamp(240px,38vw,420px); height: clamp(240px,38vw,420px);
+  margin-bottom: 2.5rem;
+}
+.mandala-svg {
+  width: 100%; height: 100%;
+  animation: mSpin 90s linear infinite;
+}
+@keyframes mSpin { to { transform: rotate(360deg); } }
+.mandala-date-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem;
+}
+.m-date-text {
+  font-family: var(--font-display); font-style: italic;
+  font-size: clamp(0.95rem,1.8vw,1.5rem); color: var(--cream); letter-spacing: 0.04em;
+}
+.m-loc {
+  font-family: var(--font-body); font-weight: 200;
+  font-size: clamp(0.6rem,0.9vw,0.78rem);
+  color: rgba(201,168,76,0.65); letter-spacing: 0.45em; text-transform: uppercase;
+}
+.rosette-row {
+  display: flex; align-items: center; gap: clamp(1rem,3vw,3rem); margin-top: 0.5rem;
+}
+.r-names {
+  font-family: var(--font-body); font-weight: 300;
+  font-size: clamp(0.75rem,1.1vw,0.95rem);
+  color: rgba(245,237,214,0.5); letter-spacing: 0.1em;
+}
+
+/* ====== EVENTS ====== */
+#events { padding: clamp(4rem,7vw,8rem) clamp(1.5rem,6vw,7rem); max-width: 1000px; margin: 0 auto; }
+.e-label {
+  font-family: var(--font-body); font-size: 0.62rem;
+  letter-spacing: 0.55em; color: var(--gold); text-transform: uppercase;
+  text-align: center; margin-bottom: 3rem;
+  display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+}
+.e-label::before, .e-label::after {
+  content: ''; display: block; width: 40px; height: 1px; background: rgba(201,168,76,0.35);
+}
+.events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem,2.5vw,2.5rem); }
+.e-card {
+  background: rgba(255,255,255,0.022);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 3px; padding: clamp(1.5rem,3vw,2.8rem);
+  display: flex; flex-direction: column; gap: 1.2rem;
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+.e-card:hover { background: rgba(201,168,76,0.035); border-color: rgba(201,168,76,0.55); }
+.e-icon { width: 34px; height: 34px; }
+.e-name {
+  font-family: var(--font-display); font-style: italic;
+  font-size: clamp(1.3rem,2.2vw,1.9rem); color: var(--cream); font-weight: 400;
+}
+.e-detail {
+  font-family: var(--font-body); font-weight: 300;
+  font-size: 0.78rem; color: rgba(245,237,214,0.48); letter-spacing: 0.04em; line-height: 2;
+}
+.e-detail strong {
+  color: var(--gold); font-weight: 400; letter-spacing: 0.18em;
+  text-transform: uppercase; font-size: 0.6rem;
+}
+
+/* ====== SCHEDULE OVERLAY (fades in over last frame in hero; text only, no panel) ====== */
+#schedule-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(8vh, 1.5rem) clamp(1rem, 4vw, 2.5rem);
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+#schedule-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.schedule-overlay-inner {
+  width: 100%;
+  max-width: min(90vw, 720px);
+  max-height: 80vh;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  position: relative;
+}
+
+.schedule-overlay-inner::before {
+  content: none;
+}
+
+.schedule-canvas-inner {
+  padding: clamp(2.35rem, 5vw, 3.7rem) clamp(2rem, 5vw, 3.6rem) clamp(4rem, 8vh, 5rem);
+  position: relative;
+}
+
+.schedule-page {
+  display: none;
+}
+.schedule-page--active {
+  display: block;
+  padding-bottom: clamp(1.4rem, 3vh, 2rem);
+}
+
+.schedule-page--active[data-page="schedule"] {
+  padding-bottom: clamp(0.8rem, 2vh, 1.4rem);
+}
+
+.schedule-message {
+  font-family: var(--font-wedding);
+  font-weight: 500;
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  line-height: 1.85;
+  color: #5a3b22;
+  text-align: center;
+  margin-bottom: clamp(1.1rem, 2.5vw, 2rem);
+  padding: 0 0.5rem;
+  position: relative;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.schedule-line {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.schedule-name-block {
+  display: block;
+  margin: 0.35rem 0 0.55rem;
+}
+
+.schedule-name-main {
+  display: block;
+  font-family: var(--font-names);
+  font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+  font-weight:550;
+  letter-spacing: 0.06em;
+}
+
+.schedule-parent-line {
+  display: block;
+  margin-top: 0.1rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.5rem, 0.6vw, 0.6rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(90, 59, 34, 0.9);
+}
+
+.schedule-line-bottom {
+  margin-top: 0.5rem;
+}
+
+.schedule-note {
+  font-family: var(--font-wedding);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  line-height: 1.8;
+  color: #5a3b22;
+}
+
+.events-subnav {
+  display: inline-flex;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.events-subnav-btn {
+  border: none;
+  background: transparent;
+  color: rgba(122, 80, 16, 0.7);
+  font-family: var(--font-body);
+  font-size: clamp(0.65rem, 0.8vw, 0.8rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.6rem;
+  min-height: 44px;
+  min-width: 44px;
+  cursor: pointer;
+  position: relative;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.events-subnav-btn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.35rem;
+  height: 1px;
+  background: transparent;
+  transform-origin: center;
+  transform: scaleX(0);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.events-subnav-btn.is-active {
+  color: #5a3b22;
+}
+
+.events-subnav-btn.is-active::after {
+  background: linear-gradient(90deg, transparent, #5a3b22, transparent);
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.events-subpage {
+  display: none;
+}
+
+.events-subpage--active {
+  display: block;
+}
+
+.schedule-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  text-align: left;
+}
+
+.schedule-contact-section {
+  font-family: var(--font-body);
+}
+
+.schedule-contact-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(90, 59, 34, 0.9);
+  margin-bottom: 0.25rem;
+}
+
+.schedule-contact-line {
+  font-size: 0.9rem;
+  color: #5a3b22;
+  margin-bottom: 0.35rem;
+}
+
+.schedule-contact-number {
+  font-weight: 500;
+}
+
+.schedule-contact-actions {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.schedule-contact-btn {
+  display: inline-block;
+  padding: 0;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(122, 80, 16, 0.9);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.schedule-contact-btn:hover {
+  color: #5a3b22;
+}
+
+.schedule-contact-btn:active {
+  transform: none;
+}
+
+.schedule-list {
+  list-style: none;
+  margin: 0 0 clamp(1.25rem, 2.5vw, 1.75rem);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.schedule-list:empty {
+  display: none;
+}
+
+.schedule-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.25rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid rgba(90, 59, 34, 0.2);
+  font-family: var(--font-wedding);
+  color: #5a3b22;
+  font-weight: 500;
+}
+.schedule-list li:last-child { border-bottom: none; }
+
+.schedule-event-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.4vw, 1.28rem);
+  font-weight: 600;
+  color: #5a3b22;
+  flex: 1;
+  min-width: 0;
+}
+
+.schedule-event-meta {
+  font-family: var(--font-wedding);
+  font-size: clamp(0.85rem, 1.05vw, 0.98rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #7a5010;
+  opacity: 1;
+  white-space: nowrap;
+}
+
+.schedule-venue {
+  text-align: center;
+  margin-top: clamp(1.25rem, 2.5vw, 1.5rem);
+  padding-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  border-top: 1px solid rgba(90, 59, 34, 0.22);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ensure venue shows only on Events tab, never on Schedule tab */
+.schedule-page[data-page="schedule"] .schedule-venue {
+  display: none !important;
+}
+.schedule-page[data-page="events"] .schedule-venue {
+  display: block;
+}
+
+.schedule-venue-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  font-weight: 600;
+  color: #5a3b22;
+  margin-bottom: 0.35rem;
+}
+
+.schedule-venue-line {
+  font-family: var(--font-wedding);
+  font-weight: 500;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  color: #7a5010;
+  opacity: 1;
+  letter-spacing: 0.06em;
+}
+
+.schedule-map-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.7rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 168, 76, 0.75);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 237, 214, 0.95);
+  background: rgba(8, 6, 16, 0.85);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.schedule-map-btn:hover {
+  background: rgba(201, 168, 76, 0.25);
+  border-color: rgba(201, 168, 76, 1);
+}
+
+.schedule-map-btn:active {
+  transform: translateY(1px);
+}
+
+.schedule-event-block {
+  padding: 0.9rem 0;
+  border-bottom: 1px dashed rgba(90, 59, 34, 0.35);
+}
+.schedule-event-block:last-child {
+  border-bottom: none;
+}
+.schedule-event-block-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+  color: #5a3b22;
+  margin-bottom: 0.25rem;
+}
+.schedule-event-block-meta {
+  font-family: var(--font-wedding);
+  font-size: clamp(0.75rem, 0.9vw, 0.82rem);
+  color: #7a5010;
+  letter-spacing: 0.05em;
+}
+
+.schedule-nav {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.9rem, 3vh, 1.6rem);
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.schedule-nav-btn {
+  border: none;
+  background: transparent;
+  color: rgba(122, 80, 16, 0.7);
+  font-family: var(--font-body);
+  font-size: clamp(0.7rem, 0.8vw, 0.85rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+}
+
+.schedule-nav-btn-heart {
+  font-size: 0; /* hide text spacing, we use icon only */
+}
+
+.schedule-nav-icon-heart {
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+  color: inherit;
+}
+
+.schedule-nav-btn-call {
+  font-size: 0;
+}
+
+.schedule-nav-icon-call {
+  display: inline-block;
+  font-size: 0.9rem;
+  line-height: 1;
+  color: inherit;
+}
+
+.schedule-nav-btn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.4rem;
+  height: 1px;
+  background: transparent;
+  transform-origin: center;
+  transform: scaleX(0);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.schedule-nav-btn.is-active {
+  color: #5a3b22;
+}
+
+.schedule-nav-btn.is-active::after {
+  background: linear-gradient(90deg, transparent, #5a3b22, transparent);
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Ink-like reveal animation for schedule pages (non-directional, in-place) */
+@keyframes inkReveal {
+  0% {
+    opacity: 0;
+    filter: blur(12px) contrast(1.1);
+    transform: scale(0.96);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(4px) contrast(1.05);
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+.schedule-page.ink-reveal {
+  animation: inkReveal 0.55s ease-out forwards;
+}
+
+
+@media (max-width: 768px) {
+  #schedule-overlay {
+    padding: max(10vh, 1.5rem) 1rem;
+  }
+  .schedule-overlay-inner {
+    max-height: 78vh;
+    max-width: 100vw;
+  }
+  .schedule-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  .schedule-event-meta { white-space: normal; }
+}
+
+/* ====== FOOTER (floats over last frame) ====== */
+footer {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(1.6rem, 4vh, 2.4rem);
+  transform: translateX(-50%);
+  padding: 0;
+  text-align: center;
+  border-top: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  z-index: 3;
+}
+
+body.at-last-frame footer {
+  opacity: 1;
+  pointer-events: auto;
+}
+.f-names {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem,3.2vw,2.8rem); color: var(--crimson); letter-spacing: 0.04em;
+  transition: text-shadow 0.4s ease;
+  white-space: nowrap;
+}
+.f-names:hover { text-shadow: 0 0 28px rgba(139,26,26,0.4); }
+.f-sub {
+  font-family: var(--font-body); font-weight: 200; font-size: 0.7rem;
+  color: rgba(139,26,26,0.75); letter-spacing: 0.35em; text-transform: uppercase;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+}
+.f-blessings { display: flex; align-items: center; gap: 1.8rem; }
+.b-text { font-family: var(--font-display); font-size: 0.95rem; color: rgba(139,26,26,0.75); }
+.b-div { width: 1px; height: 16px; background: rgba(201,168,76,0.2); }
+
+/* Floating music toggle (top-right) */
+#music-toggle {
+  position: fixed;
+  right: 1.2rem;
+  top: 1.2rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid rgba(201,168,76,0.95);
+  background: rgba(3, 5, 18, 0.9);
+  color: rgba(245,237,214,1);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  z-index: 4;
+}
+
+#music-toggle.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#music-toggle:hover {
+  background: rgba(201,168,76,0.2);
+  border-color: rgba(201,168,76,1);
+  box-shadow: 0 0 12px rgba(201,168,76,0.6);
+}
+
+#music-toggle:active {
+  transform: translateY(1px);
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  #intro-text { bottom: 18vh; }
+  .story-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .events-grid { grid-template-columns: 1fr; }
+  .pull-sub { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .schedule-canvas-inner {
+    padding: clamp(2.2rem, 4.5vw, 3.2rem) 1.2rem clamp(4rem, 8vh, 5rem);
+  }
+  .schedule-nav {
+    gap: 0.8rem;
+    bottom: clamp(0.7rem, 2.5vh, 1.3rem);
+  }
+  .schedule-nav-btn {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+  }
+  #intro-text { bottom: 22vh; }
+  .intro-names { font-size: clamp(1.15rem, 10vw, 2.2rem); }
+  .ov-names { font-size: clamp(1.5rem, 10vw, 3.5rem); }
+}

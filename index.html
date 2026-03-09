@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aman &amp; Sonali · June 14, 2026</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div id="grain"></div>
+<div id="cursor"></div>
+<div id="scroll-bar"></div>
+
+<!-- ====== LOADING ====== -->
+<div id="loading">
+  <svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 8 petals, rotated around center (55,55) -->
+    <g transform="rotate(0,55,55)" class="l-petal" style="animation-delay:0.0s">
+      <ellipse cx="55" cy="24" rx="7.5" ry="20" stroke="#c9a84c" stroke-width="1.1" fill="rgba(201,168,76,0.07)"/>
+    </g>
+    <g transform="rotate(45,55,55)" class="l-petal" style="animation-delay:0.1s">
+      <ellipse cx="55" cy="24" rx="7.5" ry="20" stroke="#c9a84c" stroke-width="1.1" fill="rgba(201,168,76,0.07)"/>
+    </g>
+    <g transform="rotate(90,55,55)" class="l-petal" style="animation-delay:0.2s">
+      <ellipse cx="55" cy="24" rx="7.5" ry="20" stroke="#c9a84c" stroke-width="1.1" fill="rgba(201,168,76,0.07)"/>
+    </g>
+    <g transform="rotate(135,55,55)" class="l-petal" style="animation-delay:0.3s">
+      <ellipse cx="55" cy="24" rx="7.5" ry="20" stroke="#c9a84c" stroke-width="1.1" fill="rgba(201,168,76,0.07)"/>
+    </g>
+    <g transform="rotate(180,55,55)" class="l-petal" style="animation-delay:0.4s">
+      <ellipse cx="55" cy="24" rx="7.5" ry="20" stroke="#c9a84c" stroke-width="1.1" fill="rgba(201,168,76,0.07)"/>
+    </g>
+    <g transform="rotate(225,55,55)" class="l-petal" style="animation-delay:0.5s">
+      <ellipse cx="55" cy="24" rx="7.5" ry="20" stroke="#c9a84c" stroke-width="1.1" fill="rgba(201,168,76,0.07)"/>
+    </g>
+    <g transform="rotate(270,55,55)" class="l-petal" style="animation-delay:0.6s">
+      <ellipse cx="55" cy="24" rx="7.5" ry="20" stroke="#c9a84c" stroke-width="1.1" fill="rgba(201,168,76,0.07)"/>
+    </g>
+    <g transform="rotate(315,55,55)" class="l-petal" style="animation-delay:0.7s">
+      <ellipse cx="55" cy="24" rx="7.5" ry="20" stroke="#c9a84c" stroke-width="1.1" fill="rgba(201,168,76,0.07)"/>
+    </g>
+    <circle cx="55" cy="55" r="10" stroke="#c9a84c" stroke-width="1" fill="rgba(201,168,76,0.1)" class="l-petal" style="animation-delay:0.85s"/>
+    <circle cx="55" cy="55" r="4" fill="#c9a84c" class="l-petal" style="animation-delay:0.95s"/>
+  </svg>
+  <p id="loading-text">Preparing your invitation</p>
+  <div id="bar-track"><div id="bar-fill"></div></div>
+</div>
+
+<!-- ====== HERO ====== -->
+<div id="hero">
+  <div class="sticky-wrap">
+    <canvas id="frame-canvas"></canvas>
+
+    <div id="intro-text">
+      <span class="intro-invited">You are cordially invited to celebrate the wedding of</span>
+      <span class="intro-names">Aman &amp; Sonali</span>
+    </div>
+
+    <!-- Seal button — positioned over wax seal in frame 1 via JS -->
+    <button id="seal-btn" aria-label="Open the invitation">
+      <span class="seal-ring"></span>
+      <span class="seal-ring seal-ring-2"></span>
+      <span class="seal-label">Click to open</span>
+    </button>
+
+    <div id="scroll-overlay">
+      <span class="ov-sanskrit">शुभ विवाह</span>
+      <span class="ov-names">Aman &amp; Sonali</span>
+      <span class="ov-date">14 &nbsp;·&nbsp; VI &nbsp;·&nbsp; MMXXVI</span>
+      <span class="ov-location">Bangalore, India</span>
+    </div>
+
+    <!-- Schedule overlay: fades in over last frame when scroll completes (populated from data/wedding-data.js) -->
+    <div id="schedule-overlay" class="schedule-overlay">
+      <div class="schedule-overlay-inner">
+        <div class="schedule-canvas-inner">
+          <!-- Page: Schedule (default) -->
+          <div class="schedule-page schedule-page--active" data-page="schedule">
+            <p class="schedule-message" id="schedule-message"></p>
+            <ul class="schedule-list" id="schedule-list"></ul>
+          </div>
+          <!-- Page: Events (content filled from data) -->
+          <div class="schedule-page" data-page="events">
+            <div class="events-subnav">
+              <button class="events-subnav-btn is-active" data-subtarget="common">Common</button>
+              <button class="events-subnav-btn" data-subtarget="groom">Groom side</button>
+              <button class="events-subnav-btn" data-subtarget="bride">Bride side</button>
+            </div>
+            <div class="events-subpage events-subpage--active" data-subpage="common">
+              <div id="schedule-events-page"></div>
+              <div class="schedule-venue" id="schedule-venue"></div>
+            </div>
+            <div class="events-subpage" data-subpage="groom" id="schedule-events-groom"></div>
+            <div class="events-subpage" data-subpage="bride" id="schedule-events-bride"></div>
+          </div>
+          <!-- Page: Attire (copy text is static for now) -->
+          <div class="schedule-page" data-page="dress">
+            <div class="schedule-note">
+              Dress code details are still being lovingly figured out by both families.<br>
+              We’ll share a short and simple guide here very soon.
+            </div>
+          </div>
+          <!-- Page: Contact / Call -->
+          <div class="schedule-page" data-page="contact">
+            <div class="schedule-contact">
+              <div class="schedule-contact-section">
+                <div class="schedule-contact-label">For Ladke waale</div>
+                <div class="schedule-contact-line">Contact Ankit R. &mdash; <span class="schedule-contact-number">+91&nbsp;91564&nbsp;51159</span></div>
+                <div class="schedule-contact-actions">
+                  <a class="schedule-contact-btn" href="tel:+919156451159">Call</a>
+                  <a class="schedule-contact-btn" href="https://wa.me/919156451159" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                </div>
+              </div>
+              <div class="schedule-contact-section">
+                <div class="schedule-contact-label">For Ladki waale</div>
+                <div class="schedule-contact-line">Contact Chandrashekhar H. &mdash; <span class="schedule-contact-number">+91&nbsp;94804&nbsp;10721</span></div>
+                <div class="schedule-contact-actions">
+                  <a class="schedule-contact-btn" href="tel:+919480410721">Call</a>
+                  <a class="schedule-contact-btn" href="https://wa.me/919480410721" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Page switcher buttons (bottom of last slide) -->
+          <div class="schedule-nav">
+            <button class="schedule-nav-btn schedule-nav-btn-heart is-active" data-target="schedule" aria-label="Schedule">
+              <span class="schedule-nav-icon-heart">❤︎⁠</span>
+            </button>
+            <button class="schedule-nav-btn" data-target="events">Events</button>
+            <button class="schedule-nav-btn" data-target="dress">Attire</button>
+            <button class="schedule-nav-btn schedule-nav-btn-call" data-target="contact" aria-label="Contact">
+              <span class="schedule-nav-icon-call">☎︎</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="f-blessings">
+    <span class="b-text">ಶುಭ ವಿವಾಹ</span>
+    <div class="b-div"></div>
+    <div class="f-names">Aman &amp; Sonali</div>
+    <div class="b-div"></div>
+    <span class="b-text">शुभ विवाह</span>
+  </div>
+  <p class="f-sub">With love &amp; blessings &nbsp;·&nbsp; June 2026</p>
+</footer>
+
+<!-- Minimal floating music toggle (shown when background music is playing) -->
+<button id="music-toggle" aria-label="Stop background music">♪</button>
+
+<script src="data/wedding-data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
