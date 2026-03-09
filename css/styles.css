@@ -835,7 +835,7 @@ body {
   .schedule-event-meta { white-space: normal; }
   /* Keep tab bar visible above footer and browser chrome on tablets/phones */
   .schedule-nav {
-    bottom: max(clamp(10rem, 22vh, 14rem), calc(env(safe-area-inset-bottom, 0px) + 4rem));
+    bottom: max(clamp(5rem, 14vh, 8rem), calc(env(safe-area-inset-bottom, 0px) + 2.5rem));
   }
 }
 
@@ -925,15 +925,19 @@ body.at-last-frame footer {
   .story-grid { grid-template-columns: 1fr; gap: 3rem; }
   .events-grid { grid-template-columns: 1fr; }
   .pull-sub { max-width: 100%; }
+  .f-blessings { gap: 0.9rem; }
+  .b-div { height: 10px; }
 }
 @media (max-width: 480px) {
   .schedule-canvas-inner {
     padding: clamp(2.2rem, 4.5vw, 3.2rem) 1.2rem clamp(4rem, 8vh, 5rem);
   }
+  .f-blessings { gap: 0.5rem; }
+  .b-div { height: 8px; }
   .schedule-nav {
     gap: 0.35rem;
     padding: 0.3rem 0.4rem;
-    bottom: max(calc(clamp(5.5rem, 18vh, 9rem) + 10vh), calc(env(safe-area-inset-bottom, 0px) + 6rem));
+    bottom: max(calc(clamp(5.5rem, 18vh, 9rem) + 3vh), calc(env(safe-area-inset-bottom, 0px) + 3.5rem));
     background: rgba(45, 38, 28, 0.35);
   }
   .schedule-nav-btn {
