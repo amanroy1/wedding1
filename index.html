@@ -63,6 +63,22 @@
     <circle cx="55" cy="55" r="4" fill="#c9a84c" class="l-petal" style="animation-delay:0.95s"/>
   </svg>
   <p id="loading-text">Preparing your invitation</p>
+  <script>
+    (function(){
+      var messages = [
+        "Folding the scroll with love…",
+        "Polishing the wax seal…",
+        "Sprinkling a little shagun…",
+        "Ironing out the invitation…",
+        "Counting petals & blessings…",
+        "Tying the sacred thread…",
+        "Chanting a tiny mantra…",
+        "Rolling out the red parchment…"
+      ];
+      var el = document.getElementById('loading-text');
+      if (el) el.textContent = messages[Math.floor(Math.random() * messages.length)];
+    })();
+  </script>
   <div id="bar-track"><div id="bar-fill"></div></div>
 </div>
 
