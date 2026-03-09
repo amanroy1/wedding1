@@ -80,19 +80,10 @@
             <p class="schedule-message" id="schedule-message"></p>
             <ul class="schedule-list" id="schedule-list"></ul>
           </div>
-          <!-- Page: Events (content filled from data) -->
+          <!-- Page: Events (single list of common events + venue from data) -->
           <div class="schedule-page" data-page="events">
-            <div class="events-subnav">
-              <button class="events-subnav-btn is-active" data-subtarget="common">Common</button>
-              <button class="events-subnav-btn" data-subtarget="groom">Groom side</button>
-              <button class="events-subnav-btn" data-subtarget="bride">Bride side</button>
-            </div>
-            <div class="events-subpage events-subpage--active" data-subpage="common">
-              <div id="schedule-events-page"></div>
-              <div class="schedule-venue" id="schedule-venue"></div>
-            </div>
-            <div class="events-subpage" data-subpage="groom" id="schedule-events-groom"></div>
-            <div class="events-subpage" data-subpage="bride" id="schedule-events-bride"></div>
+            <div id="schedule-events-page"></div>
+            <div class="schedule-venue" id="schedule-venue"></div>
           </div>
           <!-- Page: Attire (copy text is static for now) -->
           <div class="schedule-page" data-page="dress">
@@ -122,19 +113,19 @@
               </div>
             </div>
           </div>
-          <!-- Page switcher buttons (bottom of last slide) -->
-          <div class="schedule-nav">
-            <button class="schedule-nav-btn schedule-nav-btn-heart is-active" data-target="schedule" aria-label="Schedule">
-              <span class="schedule-nav-icon-heart">❤︎⁠</span>
-            </button>
-            <button class="schedule-nav-btn" data-target="events">Events</button>
-            <button class="schedule-nav-btn" data-target="dress">Attire</button>
-            <button class="schedule-nav-btn schedule-nav-btn-call" data-target="contact" aria-label="Contact">
-              <span class="schedule-nav-icon-call">☎︎</span>
-            </button>
-          </div>
         </div>
       </div>
+    </div>
+    <!-- Tab bar: fixed at bottom, outside overlay so it stays clickable; visibility toggled by JS -->
+    <div class="schedule-nav" id="schedule-nav" aria-hidden="true">
+      <button class="schedule-nav-btn schedule-nav-btn-heart is-active" data-target="schedule" aria-label="Schedule">
+        <span class="schedule-nav-icon-heart">❤︎⁠</span>
+      </button>
+      <button class="schedule-nav-btn" data-target="events">Events</button>
+      <button class="schedule-nav-btn" data-target="dress">Attire</button>
+      <button class="schedule-nav-btn schedule-nav-btn-call" data-target="contact" aria-label="Contact">
+        <span class="schedule-nav-icon-call">☎︎</span>
+      </button>
     </div>
   </div>
 </div>

@@ -127,6 +127,8 @@ window.addEventListener('scroll', () => {
   // Schedule fades in over last frame when scroll nears end (~90%)
   const atLastFrame = progress >= 0.90;
   if (scheduleOverlay) scheduleOverlay.classList.toggle('visible', atLastFrame);
+  const scheduleNavEl = document.getElementById('schedule-nav');
+  if (scheduleNavEl) scheduleNavEl.classList.toggle('visible', atLastFrame);
   document.body.classList.toggle('at-last-frame', atLastFrame);
   if (atLastFrame && !musicStarted) {
     startBgMusic();
@@ -190,6 +192,8 @@ function autoScrollHero() {
     overlay.classList.toggle('visible', progress >= 0.83);
     const atLastFrame = progress >= 0.90;
     if (scheduleOverlay) scheduleOverlay.classList.toggle('visible', atLastFrame);
+    const scheduleNavEl = document.getElementById('schedule-nav');
+    if (scheduleNavEl) scheduleNavEl.classList.toggle('visible', atLastFrame);
     document.body.classList.toggle('at-last-frame', atLastFrame);
     if (atLastFrame && !musicStarted) {
       startBgMusic();
@@ -277,14 +281,12 @@ function renderVenueBlock(venue, showMapButton = true) {
 
 function renderWeddingFromData() {
   if (typeof WEDDING_DATA === 'undefined') return;
-  const { events, venue, groomEvents, groomVenue, brideEvents, brideVenue } = WEDDING_DATA;
+  const { events, venue } = WEDDING_DATA;
   const eventsGrid = document.getElementById('events-grid');
   const scheduleMessage = document.getElementById('schedule-message');
   const scheduleList = document.getElementById('schedule-list');
   const scheduleVenue = document.getElementById('schedule-venue');
   const scheduleEventsPage = document.getElementById('schedule-events-page');
-  const groomContainer = document.getElementById('schedule-events-groom');
-  const brideContainer = document.getElementById('schedule-events-bride');
 
   if (eventsGrid && events && events.length) {
     const icons = [VEENA_ICON, DIYA_ICON, DIYA_ICON];
@@ -329,20 +331,6 @@ function renderWeddingFromData() {
 
   if (scheduleEventsPage && events && events.length) {
     scheduleEventsPage.innerHTML = events.map(ev => renderEventBlock(ev)).join('');
-  }
-
-  if (groomContainer) {
-    const list = (groomEvents && groomEvents.length)
-      ? `<div class="events-sublist">${groomEvents.map(ev => renderEventBlock(ev)).join('')}</div>`
-      : '<div class="schedule-note">Details to be shared soon.</div>';
-    groomContainer.innerHTML = list + renderVenueBlock(groomVenue || null, false);
-  }
-
-  if (brideContainer) {
-    const list = (brideEvents && brideEvents.length)
-      ? `<div class="events-sublist">${brideEvents.map(ev => renderEventBlock(ev)).join('')}</div>`
-      : '<div class="schedule-note">Details to be shared soon.</div>';
-    brideContainer.innerHTML = list + renderVenueBlock(brideVenue || null, false);
   }
 }
 
@@ -430,31 +418,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
       if (activePage) runInkReveal(activePage);
     });
-  }
-
-  // Events sub-tabs (within Events page) — use both click and touchend for reliable mobile taps
-  const eventsSubnav = document.querySelector('.events-subnav');
-  if (eventsSubnav) {
-    const subpages = document.querySelectorAll('.events-subpage');
-    const subButtons = eventsSubnav.querySelectorAll('.events-subnav-btn');
-
-    function handleEventsSubTab(e) {
-      const btn = e.target.closest('.events-subnav-btn');
-      if (!btn) return;
-      const target = btn.getAttribute('data-subtarget');
-      if (!target) return;
-
-      let activeSub = null;
-      subpages.forEach(sp => {
-        const isActive = sp.getAttribute('data-subpage') === target;
-        sp.classList.toggle('events-subpage--active', isActive);
-        if (isActive) activeSub = sp;
-      });
-      subButtons.forEach(b => b.classList.toggle('is-active', b === btn));
-    }
-
-    eventsSubnav.addEventListener('click', handleEventsSubTab);
-    eventsSubnav.addEventListener('touchend', handleEventsSubTab, { passive: true });
   }
 
   // Music toggle button
