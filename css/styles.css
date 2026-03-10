@@ -64,6 +64,8 @@ body {
   font-family: var(--font-display); font-style: italic;
   font-weight: 300; font-size: 0.9rem;
   color: var(--gold); letter-spacing: 0.5em;
+  text-align: center;
+  max-width: 85vw;
 }
 
 #bar-track { width: 180px; height: 1px; background: rgba(201,168,76,0.2); }
