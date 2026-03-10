@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Aman &amp; Sonali · June 22, 2026</title>
 <!-- Link preview: use first frame so shared links show the invitation image -->
 <meta property="og:type" content="website">
@@ -23,7 +26,7 @@
   document.querySelector('meta[name="twitter:image"]').setAttribute('content', img);
 })();
 </script>
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=1">
 </head>
 <body>
 
@@ -182,7 +185,8 @@
 <!-- Minimal floating music toggle (shown when background music is playing) -->
 <button id="music-toggle" aria-label="Stop background music">♪</button>
 
-<script src="data/wedding-data.js"></script>
-<script src="js/main.js"></script>
+<!-- Bump ?v= when you update the site so visitors get fresh assets -->
+<script src="data/wedding-data.js?v=1"></script>
+<script src="js/main.js?v=1"></script>
 </body>
 </html>
