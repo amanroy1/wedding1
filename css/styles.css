@@ -134,14 +134,49 @@ body {
 #seal-btn {
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
+  /* Larger tap area for mobile (160px for easy tapping) */
+  width: 160px;
+  height: 160px;
+  min-width: 160px;
+  min-height: 160px;
   background: transparent; border: none;
   cursor: pointer; pointer-events: auto; z-index: 10;
   display: flex; align-items: center; justify-content: center;
   transition: opacity 0.6s ease;
 }
 #seal-btn.hidden { opacity: 0; pointer-events: none; }
+
+/* Hint toast: appears once at top, then fades out */
+.hint-toast {
+  position: fixed;
+  left: 50%;
+  top: clamp(1rem, 4vh, 2rem);
+  transform: translateX(-50%);
+  z-index: 9;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.65rem, 1vw, 0.75rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245, 237, 214, 0.95);
+  background: rgba(45, 38, 28, 0.85);
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+}
+.hint-toast.visible {
+  opacity: 1;
+  visibility: visible;
+}
+.hint-toast.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .seal-ring { display: none; }
 .seal-ring-2 { display: none; }
 .seal-label {

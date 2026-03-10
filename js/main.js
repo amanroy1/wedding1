@@ -15,6 +15,7 @@ const overlay   = document.getElementById('scroll-overlay');
 const scheduleOverlay = document.getElementById('schedule-overlay');
 const sealBtn   = document.getElementById('seal-btn');
 const introText = document.getElementById('intro-text');
+const hintToast = document.getElementById('hint-toast');
 const loading   = document.getElementById('loading');
 const barFill   = document.getElementById('bar-fill');
 const scrollBar = document.getElementById('scroll-bar');
@@ -138,6 +139,11 @@ window.addEventListener('scroll', () => {
   const scrolled = progress > 0.02;
   sealBtn.classList.toggle('hidden', scrolled);
   introText.classList.toggle('hidden', scrolled);
+  // Dismiss hint toast when user scrolls
+  if (scrolled && hintToast && hintToast.classList.contains('visible')) {
+    hintToast.classList.remove('visible');
+    hintToast.classList.add('fade-out');
+  }
 
   // Global progress bar
   const pg = window.scrollY / (document.body.scrollHeight - window.innerHeight);
@@ -369,8 +375,14 @@ window.addEventListener('DOMContentLoaded', async () => {
   positionSealBtn();
   positionOverlay();
 
+  let sealTapped = false;
   // Wire up seal button
   sealBtn.addEventListener('click', () => {
+    sealTapped = true;
+    if (hintToast && hintToast.classList.contains('visible')) {
+      hintToast.classList.remove('visible');
+      hintToast.classList.add('fade-out');
+    }
     clickSound.currentTime = 0;
     clickSound.play().catch(() => {});
     primeBgMusic();
@@ -380,6 +392,18 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Fade out loading screen
   loading.style.opacity = '0';
   setTimeout(() => { loading.style.display = 'none'; }, 950);
+
+  // Show hint toast after load (only if seal not tapped yet), then auto-hide after 5s
+  function showHintToast() {
+    if (!hintToast || sealTapped) return;
+    hintToast.classList.remove('fade-out');
+    hintToast.classList.add('visible');
+    setTimeout(function() {
+      hintToast.classList.remove('visible');
+      hintToast.classList.add('fade-out');
+    }, 5000);
+  }
+  setTimeout(showHintToast, 1200);
 
   renderWeddingFromData();
 
