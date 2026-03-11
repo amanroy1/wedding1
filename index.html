@@ -185,8 +185,13 @@
   <p class="f-sub">With love &amp; blessings<br>June 2026</p>
 </footer>
 
-<!-- Minimal floating music toggle (shown when background music is playing) -->
-<button id="music-toggle" aria-label="Stop background music">♪</button>
+<!-- Floating music toggle: play/pause, SVG icons so color is always white on all devices -->
+<button id="music-toggle" aria-label="Pause background music">
+  <span id="music-toggle-icon" aria-hidden="true">
+    <svg class="music-icon music-icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    <svg class="music-icon music-icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true" style="display:none"><path d="M8 5v14l11-7z"/></svg>
+  </span>
+</button>
 
 <!-- Bump ?v= when you update the site so visitors get fresh assets -->
 <script src="data/wedding-data.js?v=2"></script>

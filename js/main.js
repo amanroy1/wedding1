@@ -482,13 +482,23 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Music toggle button
+  // Music toggle: play/pause, SVG icons (always white via currentColor)
+  const iconPause = document.querySelector('.music-icon-pause');
+  const iconPlay = document.querySelector('.music-icon-play');
   if (musicToggle) {
     musicToggle.addEventListener('click', () => {
-      bgMusic.pause();
-      musicPrimed = false;
-      musicStarted = false;
-      musicToggle.classList.remove('visible');
+      if (bgMusic.paused) {
+        bgMusic.volume = 0.6;
+        bgMusic.play().catch(() => {});
+        if (iconPause) iconPause.style.display = '';
+        if (iconPlay) iconPlay.style.display = 'none';
+        musicToggle.setAttribute('aria-label', 'Pause background music');
+      } else {
+        bgMusic.pause();
+        if (iconPause) iconPause.style.display = 'none';
+        if (iconPlay) iconPlay.style.display = '';
+        musicToggle.setAttribute('aria-label', 'Play background music');
+      }
     });
   }
 });
