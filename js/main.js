@@ -15,6 +15,7 @@ const overlay   = document.getElementById('scroll-overlay');
 const scheduleOverlay = document.getElementById('schedule-overlay');
 const sealBtn   = document.getElementById('seal-btn');
 const introText = document.getElementById('intro-text');
+const heroCountdown = document.getElementById('hero-countdown');
 const hintToast = document.getElementById('hint-toast');
 const loading   = document.getElementById('loading');
 const barFill   = document.getElementById('bar-fill');
@@ -135,10 +136,11 @@ window.addEventListener('scroll', () => {
     startBgMusic();
   }
 
-  // Hide/show seal button and intro text based on scroll position
+  // Hide/show seal button, intro text, and hero countdown based on scroll position
   const scrolled = progress > 0.02;
   sealBtn.classList.toggle('hidden', scrolled);
   introText.classList.toggle('hidden', scrolled);
+  if (heroCountdown) heroCountdown.classList.toggle('hidden', scrolled);
   // Dismiss hint toast when user scrolls
   if (scrolled && hintToast && hintToast.classList.contains('visible')) {
     hintToast.classList.remove('visible');
@@ -174,6 +176,7 @@ function positionOverlay() {
 function autoScrollHero() {
   sealBtn.classList.add('hidden');
   introText.classList.add('hidden');
+  if (heroCountdown) heroCountdown.classList.add('hidden');
   isAutoScrolling = true;
   const startY  = window.scrollY;
   const endY    = hero.offsetTop + hero.offsetHeight - window.innerHeight;
@@ -379,6 +382,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Wire up seal button
   sealBtn.addEventListener('click', () => {
     sealTapped = true;
+    if (toastTimeoutId) {
+      clearTimeout(toastTimeoutId);
+      toastTimeoutId = null;
+    }
     if (hintToast && hintToast.classList.contains('visible')) {
       hintToast.classList.remove('visible');
       hintToast.classList.add('fade-out');
@@ -393,7 +400,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   loading.style.opacity = '0';
   setTimeout(() => { loading.style.display = 'none'; }, 950);
 
-  // Show hint toast after load (only if seal not tapped yet), then auto-hide after 5s
+  // Show hint toast only if user hasn't tapped the seal within 3 seconds
+  let toastTimeoutId = null;
   function showHintToast() {
     if (!hintToast || sealTapped) return;
     hintToast.classList.remove('fade-out');
@@ -403,9 +411,39 @@ window.addEventListener('DOMContentLoaded', async () => {
       hintToast.classList.add('fade-out');
     }, 5000);
   }
-  setTimeout(showHintToast, 1200);
+  toastTimeoutId = setTimeout(showHintToast, 5000);
 
   renderWeddingFromData();
+
+  // Hero countdown: running timer to wedding day (22 June 2026, 9:00 AM IST); two parts for mobile (line1: days·hrs·mins, line2: secs)
+  const heroCountdownMain = document.getElementById('hero-countdown-main');
+  const heroCountdownSecs = document.getElementById('hero-countdown-secs');
+  if (heroCountdown && heroCountdownMain && heroCountdownSecs) {
+    // 22 June 2026, 9:00 AM IST (IST = UTC+5:30, so 03:30 UTC)
+    const weddingDate = new Date(Date.UTC(2026, 5, 22, 3, 30, 0));
+    function updateCountdown() {
+      const now = new Date();
+      const diff = weddingDate.getTime() - now.getTime();
+      if (diff <= 0) {
+        heroCountdownMain.textContent = 'Today is the day.';
+        heroCountdownSecs.textContent = '';
+        return;
+      }
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / (24 * 60 * 60));
+      const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      const mainParts = [];
+      if (days > 0) mainParts.push(`${days} day${days === 1 ? '' : 's'}`);
+      mainParts.push(`${hours} hr${hours === 1 ? '' : 's'}`);
+      mainParts.push(`${minutes} min${minutes === 1 ? '' : 's'}`);
+      heroCountdownMain.textContent = mainParts.join(' · ');
+      heroCountdownSecs.textContent = `${seconds} sec${seconds === 1 ? '' : 's'} left`;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
 
   // Helper: run ink reveal on active schedule page
   function runInkReveal(targetPage) {
