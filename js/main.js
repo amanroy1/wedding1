@@ -3,6 +3,24 @@
 // Following SCROLL-ANIMATION-BEST-PRACTICES.md precisely
 // ======================================================
 
+const LANG_CODES = ['en', 'hi', 'kn', 'bho'];
+const LANG_COOKIE = 'wedding_lang';
+const LANG_COOKIE_MAX_AGE = 31536000; // 1 year
+
+function getStoredLang() {
+  if (typeof document === 'undefined' || !document.cookie) return 'en';
+  const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + LANG_COOKIE + '=([^;]*)'));
+  const v = m ? m[1].trim() : '';
+  return LANG_CODES.includes(v) ? v : 'en';
+}
+
+function setStoredLang(lang) {
+  if (!LANG_CODES.includes(lang)) return;
+  document.cookie = LANG_COOKIE + '=' + lang + '; path=/; max-age=' + LANG_COOKIE_MAX_AGE + '; SameSite=Lax';
+}
+
+let currentLang = 'en';
+
 const TOTAL  = 121;
 const BATCH  = 20;
 const FW     = 1948;
@@ -132,6 +150,8 @@ window.addEventListener('scroll', () => {
   const scheduleNavEl = document.getElementById('schedule-nav');
   if (scheduleNavEl) scheduleNavEl.classList.toggle('visible', atLastFrame);
   document.body.classList.toggle('at-last-frame', atLastFrame);
+  /* Tie lang position to music button visibility so they never overlap when scrolling up */
+  document.body.classList.toggle('music-toggle-visible', musicToggle ? musicToggle.classList.contains('visible') : false);
   if (atLastFrame && !musicStarted) {
     startBgMusic();
   }
@@ -204,6 +224,7 @@ function autoScrollHero() {
     const scheduleNavEl = document.getElementById('schedule-nav');
     if (scheduleNavEl) scheduleNavEl.classList.toggle('visible', atLastFrame);
     document.body.classList.toggle('at-last-frame', atLastFrame);
+    document.body.classList.toggle('music-toggle-visible', musicToggle ? musicToggle.classList.contains('visible') : false);
     if (atLastFrame && !musicStarted) {
       startBgMusic();
     }
@@ -272,12 +293,12 @@ function renderEventBlock(ev) {
   </div>`;
 }
 
-function renderVenueBlock(venue, showMapButton = true) {
+function renderVenueBlock(venue, showMapButton = true, seeInMapText = 'See in Map') {
   if (!venue || !venue.name) return '';
   const mapBtn = showMapButton
     ? (() => {
         const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.name + ' ' + (venue.line || ''))}`;
-        return `<a class="schedule-map-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer">See in Map</a>`;
+        return `<a class="schedule-map-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(seeInMapText)}</a>`;
       })()
     : '';
   return `
@@ -288,58 +309,55 @@ function renderVenueBlock(venue, showMapButton = true) {
     </div>`;
 }
 
-function renderWeddingFromData() {
-  if (typeof WEDDING_DATA === 'undefined') return;
-  const { events, venue } = WEDDING_DATA;
+function renderWeddingFromData(lang) {
+  const t = typeof TRANSLATIONS !== 'undefined' && lang && TRANSLATIONS[lang]
+    ? TRANSLATIONS[lang]
+    : (typeof WEDDING_DATA !== 'undefined' ? { events: WEDDING_DATA.events, venue: WEDDING_DATA.venue, seeInMap: 'See in Map', venueLabel: 'Venue', date: 'Date', time: 'Time' } : null);
+  if (!t || !t.events || !t.venue) return;
+  const { events, venue, seeInMap, venueLabel, date: dateLabel, time: timeLabel } = t;
+  const dateL = dateLabel || 'Date';
+  const timeL = timeLabel || 'Time';
+  const venueL = venueLabel || 'Venue';
   const eventsGrid = document.getElementById('events-grid');
   const scheduleMessage = document.getElementById('schedule-message');
   const scheduleList = document.getElementById('schedule-list');
   const scheduleVenue = document.getElementById('schedule-venue');
   const scheduleEventsPage = document.getElementById('schedule-events-page');
 
+  if (scheduleMessage && t.scheduleLine1) {
+    scheduleMessage.innerHTML = `
+      <span class="schedule-line">${escapeHtml(t.scheduleLine1)}</span>
+      <span class="schedule-name-block">
+        <span class="schedule-name-main">${escapeHtml(t.groomName)}</span>
+        <span class="schedule-parent-line">${escapeHtml(t.groomParentLine)}</span>
+      </span>
+      <span class="schedule-name-block">
+        <span class="schedule-name-main">${escapeHtml(t.brideName)}</span>
+        <span class="schedule-parent-line">${escapeHtml(t.brideParentLine)}</span>
+      </span>
+      <span class="schedule-line schedule-line-bottom">${escapeHtml(t.scheduleLineBottom)}</span>
+    `;
+  }
+  if (scheduleList) scheduleList.innerHTML = '';
+  if (scheduleVenue && venue) {
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.name + ' ' + (venue.line || ''))}`;
+    scheduleVenue.innerHTML = `
+      <div class="schedule-venue-name">${escapeHtml(venue.name)}</div>
+      <div class="schedule-venue-line">${escapeHtml(venue.line || '')}</div>
+      <a class="schedule-map-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(seeInMap || 'See in Map')}</a>
+    `;
+  }
+  if (scheduleEventsPage && events && events.length) {
+    scheduleEventsPage.innerHTML = events.map(ev => renderEventBlock(ev)).join('');
+  }
   if (eventsGrid && events && events.length) {
     const icons = [VEENA_ICON, DIYA_ICON, DIYA_ICON];
     eventsGrid.innerHTML = events.map((ev, i) => {
       const delay = i * 0.08;
       const icon = icons[i % icons.length];
-      return `<div class="e-card reveal" style="transition-delay:${delay}s">${icon}<div class="e-name">${escapeHtml(ev.title)}</div><div class="e-detail"><strong>Date</strong><br>${escapeHtml(ev.date)}<br><br><strong>Time</strong><br>${escapeHtml(ev.time)}<br><br><strong>Venue</strong><br>${escapeHtml(venue.name)}<br>${escapeHtml(venue.line)}</div></div>`;
+      return `<div class="e-card reveal" style="transition-delay:${delay}s">${icon}<div class="e-name">${escapeHtml(ev.title)}</div><div class="e-detail"><strong>${escapeHtml(dateL)}</strong><br>${escapeHtml(ev.date)}<br><br><strong>${escapeHtml(timeL)}</strong><br>${escapeHtml(ev.time)}<br><br><strong>${escapeHtml(venueL)}</strong><br>${escapeHtml(venue.name)}<br>${escapeHtml(venue.line || '')}</div></div>`;
     }).join('');
     eventsGrid.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
-  }
-
-  if (scheduleMessage) {
-    scheduleMessage.innerHTML = `
-      <span class="schedule-line">
-        With full hearts, we invite you to share the moment where two stories and two families become one.
-      </span>
-      <span class="schedule-name-block">
-        <span class="schedule-name-main">Aman Roy</span>
-        <span class="schedule-parent-line">S/O Manoj Kumar Roy &amp; Suneeta Roy</span>
-      </span>
-      <span class="schedule-name-block">
-        <span class="schedule-name-main">Sonali Hanchinamani</span>
-        <span class="schedule-parent-line">D/O Chandrashekhar H. &amp; Nagalakshmi H.</span>
-      </span>
-      <span class="schedule-line schedule-line-bottom">
-        Your presence and blessings will mean the world to us as we begin this new chapter together.
-      </span>
-    `;
-  }
-  // Schedule page: keep high-level invitation only; detailed events live in Events tab.
-  if (scheduleList) {
-    scheduleList.innerHTML = '';
-  }
-  if (scheduleVenue && venue) {
-    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.name + ' ' + venue.line)}`;
-    scheduleVenue.innerHTML = `
-      <div class="schedule-venue-name">${escapeHtml(venue.name)}</div>
-      <div class="schedule-venue-line">${escapeHtml(venue.line)}</div>
-      <a class="schedule-map-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer">See in Map</a>
-    `;
-  }
-
-  if (scheduleEventsPage && events && events.length) {
-    scheduleEventsPage.innerHTML = events.map(ev => renderEventBlock(ev)).join('');
   }
 }
 
@@ -347,6 +365,89 @@ function escapeHtml(s) {
   const div = document.createElement('div');
   div.textContent = s;
   return div.innerHTML;
+}
+
+function getLangDisplayName(lang) {
+  const shortCodes = { en: 'EN', hi: 'HI', kn: 'KN', bho: 'BH' };
+  return shortCodes[lang] || (lang === 'bho' ? 'BH' : lang.toUpperCase());
+}
+
+function applyLanguage(langCode) {
+  if (!LANG_CODES.includes(langCode) || typeof TRANSLATIONS === 'undefined' || !TRANSLATIONS[langCode]) return;
+  currentLang = langCode;
+  const t = TRANSLATIONS[langCode];
+
+  document.documentElement.lang = langCode;
+  document.documentElement.classList.remove('lang-en', 'lang-hi', 'lang-kn', 'lang-bho');
+  document.documentElement.classList.add('lang-' + langCode);
+
+  const loadingText = document.getElementById('loading-text');
+  if (loadingText && t.loadingMessages && t.loadingMessages.length) {
+    loadingText.textContent = t.loadingMessages[Math.floor(Math.random() * t.loadingMessages.length)];
+  } else if (loadingText && t.loadingDefault) {
+    loadingText.textContent = t.loadingDefault;
+  }
+
+  const titleEl = document.querySelector('title');
+  if (titleEl && t.pageTitle) titleEl.textContent = t.pageTitle;
+  const ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogDesc && t.ogDescription) ogDesc.setAttribute('content', t.ogDescription);
+  const twDesc = document.querySelector('meta[name="twitter:description"]');
+  if (twDesc && t.ogDescription) twDesc.setAttribute('content', t.ogDescription);
+
+  const setText = (id, text) => { const el = document.getElementById(id); if (el && text != null) el.textContent = text; };
+  const setHtml = (id, html) => { const el = document.getElementById(id); if (el && html != null) el.innerHTML = html; };
+
+  setText('intro-invited', t.introInvited);
+  setText('intro-names', t.introNames);
+  setText('hint-toast', t.hintToast);
+  const sealLabel = document.getElementById('seal-label');
+  if (sealLabel && t.sealLabel) sealLabel.textContent = t.sealLabel;
+  const sealBtn = document.getElementById('seal-btn');
+  if (sealBtn && t.sealAria) sealBtn.setAttribute('aria-label', t.sealAria);
+
+  setText('ov-blessing', t.ovBlessing);
+  setText('ov-names', t.ovNames);
+  setText('ov-date', t.ovDate);
+  setText('ov-location', t.ovLocation);
+
+  setText('schedule-ganesh', t.ganeshMantra);
+  setHtml('schedule-note', t.dressNote);
+
+  setText('contact-label-groom', t.forLadke);
+  setText('contact-label-bride', t.forLadki);
+  const lineGroom = document.getElementById('contact-line-groom');
+  if (lineGroom && t.contactGroomLine) lineGroom.innerHTML = t.contactGroomLine + '<span class="schedule-contact-number">+91&nbsp;91564&nbsp;51159</span>';
+  const lineBride = document.getElementById('contact-line-bride');
+  if (lineBride && t.contactBrideLine) lineBride.innerHTML = t.contactBrideLine + '<span class="schedule-contact-number">+91&nbsp;94804&nbsp;10721</span>';
+
+  document.querySelectorAll('.schedule-contact-call').forEach(el => { if (t.call) el.textContent = t.call; });
+  document.querySelectorAll('.schedule-contact-wa').forEach(el => { if (t.whatsApp) el.textContent = t.whatsApp; });
+
+  const navEvents = document.getElementById('nav-btn-events');
+  if (navEvents && t.tabEvents) navEvents.textContent = t.tabEvents;
+  const navAttire = document.getElementById('nav-btn-attire');
+  if (navAttire && t.tabAttire) navAttire.textContent = t.tabAttire;
+  const navSchedule = document.getElementById('nav-btn-schedule');
+  if (navSchedule && t.ariaSchedule) navSchedule.setAttribute('aria-label', t.ariaSchedule);
+  const navContact = document.getElementById('nav-btn-contact');
+  if (navContact && t.ariaContact) navContact.setAttribute('aria-label', t.ariaContact);
+
+  setText('footer-blessing-kn', t.blessingKn);
+  setText('footer-blessing-hi', t.blessingHi);
+  setText('footer-names', t.introNames);
+  const fSub = document.getElementById('f-sub');
+  if (fSub && t.withLoveBlessings != null && t.monthYear != null) fSub.innerHTML = escapeHtml(t.withLoveBlessings) + '<br>' + escapeHtml(t.monthYear);
+
+  const langToggleLabel = document.getElementById('lang-toggle-label');
+  if (langToggleLabel) langToggleLabel.textContent = getLangDisplayName(langCode);
+
+  const musicToggleEl = document.getElementById('music-toggle');
+  if (musicToggleEl && t.ariaPauseMusic && t.ariaPlayMusic) {
+    musicToggleEl.setAttribute('aria-label', musicToggleEl.classList.contains('visible') && !bgMusic.paused ? t.ariaPauseMusic : t.ariaPlayMusic);
+  }
+
+  renderWeddingFromData(langCode);
 }
 
 // SVG divider draw-in
@@ -363,6 +464,9 @@ document.querySelectorAll('.svg-divider').forEach(el => dividerIO.observe(el));
 
 // ---- Init ----
 window.addEventListener('DOMContentLoaded', async () => {
+  currentLang = getStoredLang();
+  applyLanguage(currentLang);
+
   resizeCanvas();
   tick();
   moveCursor();
@@ -413,19 +517,58 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
   toastTimeoutId = setTimeout(showHintToast, 5000);
 
-  renderWeddingFromData();
+  // Language switcher: toggle dropdown, close on outside click or option select
+  const langToggle = document.getElementById('lang-toggle');
+  const langDropdown = document.getElementById('lang-dropdown');
+  if (langToggle && langDropdown) {
+    langToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = langDropdown.classList.toggle('open');
+      langToggle.setAttribute('aria-expanded', open);
+      langDropdown.setAttribute('aria-hidden', !open);
+    });
+    document.addEventListener('click', () => {
+      langDropdown.classList.remove('open');
+      langToggle.setAttribute('aria-expanded', 'false');
+      langDropdown.setAttribute('aria-hidden', 'true');
+    });
+    langDropdown.querySelectorAll('.lang-option').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const lang = opt.getAttribute('data-lang');
+        if (LANG_CODES.includes(lang)) {
+          setStoredLang(lang);
+          applyLanguage(lang);
+          langDropdown.classList.remove('open');
+          langToggle.setAttribute('aria-expanded', 'false');
+          langDropdown.setAttribute('aria-hidden', 'true');
+        }
+      });
+    });
+  }
 
   // Hero countdown: running timer to wedding day (22 June 2026, 9:00 AM IST); two parts for mobile (line1: days·hrs·mins, line2: secs)
   const heroCountdownMain = document.getElementById('hero-countdown-main');
   const heroCountdownSecs = document.getElementById('hero-countdown-secs');
   if (heroCountdown && heroCountdownMain && heroCountdownSecs) {
-    // 22 June 2026, 9:00 AM IST (IST = UTC+5:30, so 03:30 UTC)
     const weddingDate = new Date(Date.UTC(2026, 5, 22, 3, 30, 0));
     function updateCountdown() {
+      const t = typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang] ? TRANSLATIONS[currentLang] : null;
+      const dayL = t ? (t.countdownDay || 'day') : 'day';
+      const daysL = t ? (t.countdownDays || 'days') : 'days';
+      const hrL = t ? (t.countdownHr || 'hr') : 'hr';
+      const hrsL = t ? (t.countdownHrs || 'hrs') : 'hrs';
+      const minL = t ? (t.countdownMin || 'min') : 'min';
+      const minsL = t ? (t.countdownMins || 'mins') : 'mins';
+      const secL = t ? (t.countdownSec || 'sec') : 'sec';
+      const secsL = t ? (t.countdownSecs || 'secs') : 'secs';
+      const leftL = t ? (t.countdownLeft || 'left') : 'left';
+      const todayL = t ? (t.countdownToday || 'Today is the day.') : 'Today is the day.';
+
       const now = new Date();
       const diff = weddingDate.getTime() - now.getTime();
       if (diff <= 0) {
-        heroCountdownMain.textContent = 'Today is the day.';
+        heroCountdownMain.textContent = todayL;
         heroCountdownSecs.textContent = '';
         return;
       }
@@ -435,11 +578,11 @@ window.addEventListener('DOMContentLoaded', async () => {
       const minutes = Math.floor((totalSeconds % 3600) / 60);
       const seconds = totalSeconds % 60;
       const mainParts = [];
-      if (days > 0) mainParts.push(`${days} day${days === 1 ? '' : 's'}`);
-      mainParts.push(`${hours} hr${hours === 1 ? '' : 's'}`);
-      mainParts.push(`${minutes} min${minutes === 1 ? '' : 's'}`);
+      if (days > 0) mainParts.push(`${days} ${days === 1 ? dayL : daysL}`);
+      mainParts.push(`${hours} ${hours === 1 ? hrL : hrsL}`);
+      mainParts.push(`${minutes} ${minutes === 1 ? minL : minsL}`);
       heroCountdownMain.textContent = mainParts.join(' · ');
-      heroCountdownSecs.textContent = `${seconds} sec${seconds === 1 ? '' : 's'} left`;
+      heroCountdownSecs.textContent = `${seconds} ${seconds === 1 ? secL : secsL} ${leftL}`;
     }
     updateCountdown();
     setInterval(updateCountdown, 1000);
@@ -487,17 +630,20 @@ window.addEventListener('DOMContentLoaded', async () => {
   const iconPlay = document.querySelector('.music-icon-play');
   if (musicToggle) {
     musicToggle.addEventListener('click', () => {
+      const t = typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang] ? TRANSLATIONS[currentLang] : null;
+      const pauseLabel = t && t.ariaPauseMusic ? t.ariaPauseMusic : 'Pause background music';
+      const playLabel = t && t.ariaPlayMusic ? t.ariaPlayMusic : 'Play background music';
       if (bgMusic.paused) {
         bgMusic.volume = 0.6;
         bgMusic.play().catch(() => {});
         if (iconPause) iconPause.style.display = '';
         if (iconPlay) iconPlay.style.display = 'none';
-        musicToggle.setAttribute('aria-label', 'Pause background music');
+        musicToggle.setAttribute('aria-label', pauseLabel);
       } else {
         bgMusic.pause();
         if (iconPause) iconPause.style.display = 'none';
         if (iconPlay) iconPlay.style.display = '';
-        musicToggle.setAttribute('aria-label', 'Play background music');
+        musicToggle.setAttribute('aria-label', playLabel);
       }
     });
   }
