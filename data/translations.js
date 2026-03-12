@@ -89,19 +89,7 @@ const TRANSLATIONS = {
       { title: 'Engagement and Sangeet Ceremony', date: '21.06.2026', time: '6 PM onwards' },
       { title: 'Wedding Rituals', date: '22.06.2026', time: '9 AM Onwards' },
       { title: 'Reception', date: '22.06.2026', time: '12 PM onwards' }
-    ],
-    groomEvents: [
-      { title: 'Groom Event 1', date: 'TBA', time: '—' },
-      { title: 'Groom Event 2', date: 'TBA', time: '—' },
-      { title: 'Groom Event 3', date: 'TBA', time: '—' }
-    ],
-    brideEvents: [
-      { title: 'Bride Event 1', date: 'TBA', time: '—' },
-      { title: 'Bride Event 2', date: 'TBA', time: '—' },
-      { title: 'Bride Event 3', date: 'TBA', time: '—' }
-    ],
-    groomVenue: { name: 'Sunder Kala Bhawan', line: 'Ramnagar, Ara, Bihar' },
-    brideVenue: { name: 'Aravind Skylands', line: 'Jakkur Road, Bangalore, Karnataka' }
+    ]
   },
 
   hi: {
@@ -188,19 +176,7 @@ const TRANSLATIONS = {
       { title: 'सगाई और संगीत समारोह', date: '21.06.2026', time: 'शाम 6 बजे से' },
       { title: 'विवाह अनुष्ठान', date: '22.06.2026', time: 'सुबह 9 बजे से' },
       { title: 'स्वागत समारोह', date: '22.06.2026', time: 'दोपहर 12 बजे से' }
-    ],
-    groomEvents: [
-      { title: 'दूल्हा कार्यक्रम 1', date: 'TBA', time: '—' },
-      { title: 'दूल्हा कार्यक्रम 2', date: 'TBA', time: '—' },
-      { title: 'दूल्हा कार्यक्रम 3', date: 'TBA', time: '—' }
-    ],
-    brideEvents: [
-      { title: 'दुल्हन कार्यक्रम 1', date: 'TBA', time: '—' },
-      { title: 'दुल्हन कार्यक्रम 2', date: 'TBA', time: '—' },
-      { title: 'दुल्हन कार्यक्रम 3', date: 'TBA', time: '—' }
-    ],
-    groomVenue: { name: 'सुंदर कला भवन', line: 'रामनगर, आरा, बिहार' },
-    brideVenue: { name: 'अरविंद स्काइलैंड्स', line: 'जक्कूर रोड, बेंगलुरु, कर्नाटक' }
+    ]
   },
 
   kn: {
@@ -287,19 +263,7 @@ const TRANSLATIONS = {
       { title: 'ನಿಶ್ಚಯಾರ್ಪಣೆ ಮತ್ತು ಸಂಗೀತ ಸಮಾರಂಭ', date: '21.06.2026', time: 'ಸಂಜೆ 6 ಗಂಟೆಗೆ' },
       { title: 'ಮದುವೆ ವಿಧಿಗಳು', date: '22.06.2026', time: 'ಬೆಳಿಗ್ಗೆ 9 ಗಂಟೆಗೆ' },
       { title: 'ಸ್ವಾಗತ ಸಮಾರಂಭ', date: '22.06.2026', time: 'ಮಧ್ಯಾಹ್ನ 12 ಗಂಟೆಗೆ' }
-    ],
-    groomEvents: [
-      { title: 'ವರ ಕಾರ್ಯಕ್ರಮ 1', date: 'TBA', time: '—' },
-      { title: 'ವರ ಕಾರ್ಯಕ್ರಮ 2', date: 'TBA', time: '—' },
-      { title: 'ವರ ಕಾರ್ಯಕ್ರಮ 3', date: 'TBA', time: '—' }
-    ],
-    brideEvents: [
-      { title: 'ವಧೂ ಕಾರ್ಯಕ್ರಮ 1', date: 'TBA', time: '—' },
-      { title: 'ವಧೂ ಕಾರ್ಯಕ್ರಮ 2', date: 'TBA', time: '—' },
-      { title: 'ವಧೂ ಕಾರ್ಯಕ್ರಮ 3', date: 'TBA', time: '—' }
-    ],
-    groomVenue: { name: 'ಸುಂದರ್ ಕಲಾ ಭವನ', line: 'ರಾಮನಗರ, ಆರಾ, ಬಿಹಾರ' },
-    brideVenue: { name: 'ಅರವಿಂದ ಸ್ಕೈಲ್ಯಾಂಡ್ಸ್', line: 'ಜಕ್ಕೂರ್ ರೋಡ್, ಬೆಂಗಳೂರು, ಕರ್ನಾಟಕ' }
+    ]
   },
 
   bho: {
@@ -386,18 +350,6 @@ const TRANSLATIONS = {
       { title: 'सगाई आ संगीत समारोह', date: '21.06.2026', time: 'शाम 6 बजे से' },
       { title: 'विवाह अनुष्ठान', date: '22.06.2026', time: 'सुबह 9 बजे से' },
       { title: 'स्वागत समारोह', date: '22.06.2026', time: 'दोपहर 12 बजे से' }
-    ],
-    groomEvents: [
-      { title: 'दूल्हा कार्यक्रम 1', date: 'TBA', time: '—' },
-      { title: 'दूल्हा कार्यक्रम 2', date: 'TBA', time: '—' },
-      { title: 'दूल्हा कार्यक्रम 3', date: 'TBA', time: '—' }
-    ],
-    brideEvents: [
-      { title: 'दुल्हन कार्यक्रम 1', date: 'TBA', time: '—' },
-      { title: 'दुल्हन कार्यक्रम 2', date: 'TBA', time: '—' },
-      { title: 'दुल्हन कार्यक्रम 3', date: 'TBA', time: '—' }
-    ],
-    groomVenue: { name: 'सुंदर कला भवन', line: 'रामनगर, आरा, बिहार' },
-    brideVenue: { name: 'अरविंद स्काइलैंड्स', line: 'जक्कूर रोड, बेंगलुरु, कर्नाटक' }
+    ]
   }
 };

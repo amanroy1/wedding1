@@ -27,25 +27,4 @@ const WEDDING_DATA = {
       time: "12 PM onwards"
     }
   ],
-
-  // Groom-side events — add/remove items; list updates automatically on the site
-  groomEvents: [
-    { title: "Groom Event 1", date: "TBA", time: "—" },
-    { title: "Groom Event 2", date: "TBA", time: "—" },
-    { title: "Groom Event 3", date: "TBA", time: "—" },
-  ],
-  groomVenue: {
-    name: "Sunder Kala Bhawan",
-    line: "Ramnagar, Ara, Bihar"
-  },
-  // Bride-side events — add/remove items; list updates automatically on the site
-  brideEvents: [
-    { title: "Bride Event 1", date: "TBA", time: "—" },
-    { title: "Bride Event 2", date: "TBA", time: "—" },
-    { title: "Bride Event 3", date: "TBA", time: "—" }
-  ],
-  brideVenue: {
-    name: "Aravind Skylands",
-    line: "Jakkur Road, Bangalore, Karnataka"
-  },
 };
