@@ -1,6 +1,6 @@
 /**
  * Wedding invitation translations — one object per language.
- * Keys match across en, hi, kn, bho. Main.js uses TRANSLATIONS[lang][key].
+ * Keys match across en, hi, kn, bh. Main.js uses TRANSLATIONS[lang][key].
  * Event/venue data is per-language (transliterated names and places).
  */
 const TRANSLATIONS = {
@@ -266,7 +266,7 @@ const TRANSLATIONS = {
     ]
   },
 
-  bho: {
+  bh: {
     loadingDefault: 'राउर नेवता तैयार होत बा',
     loadingMessages: [
       'दिया बारत बानी…',

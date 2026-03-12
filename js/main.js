@@ -3,7 +3,7 @@
 // Following SCROLL-ANIMATION-BEST-PRACTICES.md precisely
 // ======================================================
 
-const LANG_CODES = ['en', 'hi', 'kn', 'bho'];
+const LANG_CODES = ['en', 'hi', 'kn', 'bh'];
 const LANG_COOKIE = 'wedding_lang';
 const LANG_COOKIE_MAX_AGE = 31536000; // 1 year
 
@@ -12,6 +12,18 @@ function getStoredLang() {
   const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + LANG_COOKIE + '=([^;]*)'));
   const v = m ? m[1].trim() : '';
   return LANG_CODES.includes(v) ? v : 'en';
+}
+
+function getInitialLang() {
+  if (typeof window === 'undefined' || !window.location || !window.location.search) return getStoredLang();
+  const params = new URLSearchParams(window.location.search);
+  const langParam = params.get('lang');
+  if (langParam && LANG_CODES.includes(langParam.trim())) {
+    const lang = langParam.trim();
+    setStoredLang(lang);
+    return lang;
+  }
+  return getStoredLang();
 }
 
 function setStoredLang(lang) {
@@ -368,8 +380,8 @@ function escapeHtml(s) {
 }
 
 function getLangDisplayName(lang) {
-  const shortCodes = { en: 'EN', hi: 'HI', kn: 'KN', bho: 'BH' };
-  return shortCodes[lang] || (lang === 'bho' ? 'BH' : lang.toUpperCase());
+  const shortCodes = { en: 'EN', hi: 'HI', kn: 'KN', bh: 'BH' };
+  return shortCodes[lang] || (lang === 'bh' ? 'BH' : lang.toUpperCase());
 }
 
 function applyLanguage(langCode) {
@@ -378,7 +390,7 @@ function applyLanguage(langCode) {
   const t = TRANSLATIONS[langCode];
 
   document.documentElement.lang = langCode;
-  document.documentElement.classList.remove('lang-en', 'lang-hi', 'lang-kn', 'lang-bho');
+  document.documentElement.classList.remove('lang-en', 'lang-hi', 'lang-kn', 'lang-bh');
   document.documentElement.classList.add('lang-' + langCode);
 
   const loadingText = document.getElementById('loading-text');
@@ -464,7 +476,7 @@ document.querySelectorAll('.svg-divider').forEach(el => dividerIO.observe(el));
 
 // ---- Init ----
 window.addEventListener('DOMContentLoaded', async () => {
-  currentLang = getStoredLang();
+  currentLang = getInitialLang();
   applyLanguage(currentLang);
 
   resizeCanvas();

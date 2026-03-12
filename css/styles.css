@@ -27,7 +27,7 @@
 
 /* Per-language font overrides: swap --font-* when html has lang class */
 html.lang-hi,
-html.lang-bho {
+html.lang-bh {
   --font-display: var(--font-display-hi);
   --font-names: var(--font-names-hi);
   --font-body: var(--font-body-hi);
@@ -35,7 +35,7 @@ html.lang-bho {
 }
 /* Devanagari & Kannada: letter-spacing breaks conjuncts and looks wrong, so reset to normal */
 html.lang-hi *,
-html.lang-bho *,
+html.lang-bh *,
 html.lang-kn * {
   letter-spacing: normal;
 }
