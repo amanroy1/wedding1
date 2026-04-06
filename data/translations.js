@@ -86,7 +86,7 @@ const TRANSLATIONS = {
 
     venue: { name: 'Akira Orchards', line: 'Yelahanka, Bengaluru, Karnataka, India' },
     events: [
-      { title: 'Engagement and Sangeet Ceremony', date: '21.06.2026', time: '6 PM onwards' },
+      { title: 'Engagement and Sangeet Ceremony', date: '24.06.2026', time: '6 PM onwards' },
       { title: 'Wedding Rituals', date: '25.06.2026', time: '9 AM Onwards' },
       { title: 'Reception', date: '25.06.2026', time: '12 PM onwards' }
     ]
@@ -173,7 +173,7 @@ const TRANSLATIONS = {
 
     venue: { name: 'अकिरा ऑर्चर्ड्स', line: 'यलहंका, बेंगलुरु, कर्नाटक, भारत' },
     events: [
-      { title: 'सगाई और सांगीतिक संध्या', date: '21.06.2026', time: 'शाम 6 बजे से' },
+      { title: 'सगाई और सांगीतिक संध्या', date: '24.06.2026', time: 'शाम 6 बजे से' },
       { title: 'विवाह विधि', date: '25.06.2026', time: 'सुबह 9 बजे से' },
       { title: 'स्वागत समारोह', date: '25.06.2026', time: 'दोपहर 12 बजे से' }
     ]
@@ -260,7 +260,7 @@ const TRANSLATIONS = {
 
     venue: { name: 'ಅಕಿರಾ ಆರ್ಚರ್ಡ್ಸ್', line: 'ಯಲಹಂಕ, ಬೆಂಗಳೂರು, ಕರ್ನಾಟಕ, ಭಾರತ' },
     events: [
-      { title: 'ನಿಶ್ಚಯಾರ್ಪಣೆ ಮತ್ತು ಸಂಗೀತ', date: '21.06.2026', time: 'ಸಂಜೆ 6 ಗಂಟೆಗೆ' },
+      { title: 'ನಿಶ್ಚಯಾರ್ಪಣೆ ಮತ್ತು ಸಂಗೀತ', date: '24.06.2026', time: 'ಸಂಜೆ 6 ಗಂಟೆಗೆ' },
       { title: 'ಮದುವೆ ಮಂಗಳ', date: '25.06.2026', time: 'ಬೆಳಿಗ್ಗೆ 9 ಗಂಟೆಗೆ' },
       { title: 'ಸ್ವಾಗತ ಸಮಾರಂಭ', date: '25.06.2026', time: 'ಮಧ್ಯಾಹ್ನ 12 ಗಂಟೆಗೆ' }
     ]
@@ -347,7 +347,7 @@ const TRANSLATIONS = {
 
     venue: { name: 'अकिरा ऑर्चर्ड्स', line: 'यलहंका, बेंगलुरु, कर्नाटक, भारत' },
     events: [
-      { title: 'सगाई आ संगीत', date: '21.06.2026', time: 'शाम 6 बजे से' },
+      { title: 'सगाई आ संगीत', date: '24.06.2026', time: 'शाम 6 बजे से' },
       { title: 'बियाह विधि', date: '25.06.2026', time: 'सुबह 9 बजे से' },
       { title: 'स्वागत', date: '25.06.2026', time: 'दोपहर 12 बजे से' }
     ]

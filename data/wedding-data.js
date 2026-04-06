@@ -13,7 +13,7 @@ const WEDDING_DATA = {
   events: [
     {
       title: "Engagement and Sangeet Ceremony",
-      date: "21.06.2026",
+      date: "24.06.2026",
       time: "6 PM onwards"
     },
     {
