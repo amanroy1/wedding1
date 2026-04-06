@@ -16,7 +16,7 @@ const TRANSLATIONS = {
       'Chanting a tiny mantra…',
       'Rolling out the red parchment…'
     ],
-    pageTitle: 'Aman & Sonali · June 22, 2026',
+    pageTitle: 'Aman & Sonali · June 25, 2026',
     ogDescription: 'You are cordially invited to celebrate our wedding.',
 
     introInvited: 'You are cordially invited to celebrate the wedding of',
@@ -87,8 +87,8 @@ const TRANSLATIONS = {
     venue: { name: 'Akira Orchards', line: 'Yelahanka, Bengaluru, Karnataka, India' },
     events: [
       { title: 'Engagement and Sangeet Ceremony', date: '21.06.2026', time: '6 PM onwards' },
-      { title: 'Wedding Rituals', date: '22.06.2026', time: '9 AM Onwards' },
-      { title: 'Reception', date: '22.06.2026', time: '12 PM onwards' }
+      { title: 'Wedding Rituals', date: '25.06.2026', time: '9 AM Onwards' },
+      { title: 'Reception', date: '25.06.2026', time: '12 PM onwards' }
     ]
   },
 
@@ -104,7 +104,7 @@ const TRANSLATIONS = {
       'मंत्रोच्चार कर रहे हैं…',
       'लाल कार्ड बना रहे हैं…'
     ],
-    pageTitle: 'अमन और सोनाली · 22 जून 2026',
+    pageTitle: 'अमन और सोनाली · 25 जून 2026',
     ogDescription: 'अमन और सोनाली के विवाह में आप सादर आमंत्रित हैं।',
 
     introInvited: 'आप सादर आमंत्रित हैं अपने विवाह समारोह में शामिल होने के लिए',
@@ -174,8 +174,8 @@ const TRANSLATIONS = {
     venue: { name: 'अकिरा ऑर्चर्ड्स', line: 'यलहंका, बेंगलुरु, कर्नाटक, भारत' },
     events: [
       { title: 'सगाई और सांगीतिक संध्या', date: '21.06.2026', time: 'शाम 6 बजे से' },
-      { title: 'विवाह विधि', date: '22.06.2026', time: 'सुबह 9 बजे से' },
-      { title: 'स्वागत समारोह', date: '22.06.2026', time: 'दोपहर 12 बजे से' }
+      { title: 'विवाह विधि', date: '25.06.2026', time: 'सुबह 9 बजे से' },
+      { title: 'स्वागत समारोह', date: '25.06.2026', time: 'दोपहर 12 बजे से' }
     ]
   },
 
@@ -191,7 +191,7 @@ const TRANSLATIONS = {
       'ಸಂಭ್ರಮದ ಮೊದಲ ಪುಟ ತೆರೆದುಕೊಳ್ಳುತ್ತಿದೆ…',
       'ಆಮಂತ್ರಣದ ಪದಗಳು ರೂಪ ಪಡೆಯುತ್ತಿವೆ…'
     ],
-    pageTitle: 'ಅಮನ್ ಮತ್ತು ಸೋನಾಲಿ · ಜೂನ್ 22, 2026',
+    pageTitle: 'ಅಮನ್ ಮತ್ತು ಸೋನಾಲಿ · ಜೂನ್ 25, 2026',
     ogDescription: 'ಅಮನ್ ಮತ್ತು ಸೋನಾಲಿ ಅವರ ಮದುವೆಗೆ ನಿಮ್ಮನ್ನು ಪ್ರೀತಿಯಿಂದ ಆಹ್ವಾನಿಸುತ್ತಿದ್ದೇವೆ.',
 
     introInvited: 'ನಮ್ಮ ಮದುವೆ ಸಮಾರಂಭಕ್ಕೆ ನಿಮ್ಮನ್ನು ಪ್ರೀತಿಯಿಂದ ಆಮಂತ್ರಿಸುತ್ತಿದ್ದೇವೆ',
@@ -261,8 +261,8 @@ const TRANSLATIONS = {
     venue: { name: 'ಅಕಿರಾ ಆರ್ಚರ್ಡ್ಸ್', line: 'ಯಲಹಂಕ, ಬೆಂಗಳೂರು, ಕರ್ನಾಟಕ, ಭಾರತ' },
     events: [
       { title: 'ನಿಶ್ಚಯಾರ್ಪಣೆ ಮತ್ತು ಸಂಗೀತ', date: '21.06.2026', time: 'ಸಂಜೆ 6 ಗಂಟೆಗೆ' },
-      { title: 'ಮದುವೆ ಮಂಗಳ', date: '22.06.2026', time: 'ಬೆಳಿಗ್ಗೆ 9 ಗಂಟೆಗೆ' },
-      { title: 'ಸ್ವಾಗತ ಸಮಾರಂಭ', date: '22.06.2026', time: 'ಮಧ್ಯಾಹ್ನ 12 ಗಂಟೆಗೆ' }
+      { title: 'ಮದುವೆ ಮಂಗಳ', date: '25.06.2026', time: 'ಬೆಳಿಗ್ಗೆ 9 ಗಂಟೆಗೆ' },
+      { title: 'ಸ್ವಾಗತ ಸಮಾರಂಭ', date: '25.06.2026', time: 'ಮಧ್ಯಾಹ್ನ 12 ಗಂಟೆಗೆ' }
     ]
   },
 
@@ -278,7 +278,7 @@ const TRANSLATIONS = {
       'मंत्र पढ़त बानी…',
       'कार्ड लिखत बानी…'
     ],
-    pageTitle: 'अमन आ सोनाली · 22 जून 2026',
+    pageTitle: 'अमन आ सोनाली · 25 जून 2026',
     ogDescription: 'अमन आ सोनाली के बियाह में रउवा दिल से नेवता देत बानी।',
 
     introInvited: 'हम रउवा दिल से नेवता देत बानी अपन बियाह में',
@@ -348,8 +348,8 @@ const TRANSLATIONS = {
     venue: { name: 'अकिरा ऑर्चर्ड्स', line: 'यलहंका, बेंगलुरु, कर्नाटक, भारत' },
     events: [
       { title: 'सगाई आ संगीत', date: '21.06.2026', time: 'शाम 6 बजे से' },
-      { title: 'बियाह विधि', date: '22.06.2026', time: 'सुबह 9 बजे से' },
-      { title: 'स्वागत', date: '22.06.2026', time: 'दोपहर 12 बजे से' }
+      { title: 'बियाह विधि', date: '25.06.2026', time: 'सुबह 9 बजे से' },
+      { title: 'स्वागत', date: '25.06.2026', time: 'दोपहर 12 बजे से' }
     ]
   }
 };
