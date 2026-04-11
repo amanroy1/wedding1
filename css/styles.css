@@ -581,6 +581,19 @@ body {
   color: #5a3b22;
 }
 
+.schedule-note p {
+  margin: 0 0 0.65em;
+}
+
+.schedule-note ul {
+  margin: 0;
+  padding-left: 1.15em;
+}
+
+.schedule-note li {
+  margin: 0.3em 0;
+}
+
 .events-subnav {
   display: inline-flex;
   gap: 1rem;

@@ -44,7 +44,7 @@ const TRANSLATIONS = {
     venueLabel: 'Venue',
     venue: { name: 'Akira Orchards', line: 'Yelahanka, Bengaluru, Karnataka, India' },
 
-    dressNote: 'Dress code details are still being lovingly figured out by both families.<br>We\'ll share a short and simple guide here very soon.',
+    dressNote: '<p>A gentle guide for each celebration — not a fixed dress code. Please wear what feels right for you, and align with these suggestions as closely as you comfortably can.</p><ul><li><strong>Engagement and Sangeet:</strong> Indo-Western</li><li><strong>Wedding rituals:</strong> Ethnic</li><li><strong>Reception:</strong> Formal</li></ul>',
 
     forLadke: 'For Ladke waale',
     forLadki: 'For Ladki waale',
@@ -131,7 +131,7 @@ const TRANSLATIONS = {
     time: 'समय',
     venueLabel: 'स्थल',
 
-    dressNote: 'दोनों परिवार मिलकर पोशाक का ख्याल रख रहे हैं।<br>जल्द ही यहाँ एक छोटी गाइड साझा करेंगे।',
+    dressNote: '<p>हर कार्यक्रम के लिए एक नरम सुझाव है — यह कोई सख्त नियम नहीं। आप जैसा चाहें वैसे पहन सकते हैं; इन सुझावों के साथ जितना संभव हो उतना मिलान रखें।</p><ul><li><strong>सगाई और संगीत:</strong> इंडो-वेस्टर्न</li><li><strong>विवाह विधि:</strong> पारंपरिक भारतीय परिधान (एथनिक)</li><li><strong>स्वागत समारोह:</strong> औपचारिक (फॉर्मल)</li></ul>',
 
     forLadke: 'लड़के वालों के लिए',
     forLadki: 'लड़की वालों के लिए',
@@ -218,7 +218,7 @@ const TRANSLATIONS = {
     time: 'ಸಮಯ',
     venueLabel: 'ಸ್ಥಳ',
 
-    dressNote: 'ಉಡುಪು ವಿವರಗಳನ್ನು ಕುಟುಂಬಗಳು ನಿರ್ಧರಿಸುತ್ತಿದ್ದಾರೆ.<br>ಶೀಘ್ರದಲ್ಲಿ ಇಲ್ಲಿ ಸರಳ ಮಾರ್ಗದರ್ಶಿ ಬರಲಿದೆ.',
+    dressNote: '<p>ಪ್ರತಿ ಕಾರ್ಯಕ್ರಮಕ್ಕೆ ಮೃದು ಮಾರ್ಗದರ್ಶಿ — ಇದು ಕಡ್ಡಾಯ ಉಡುಪು ನಿಯಮವಲ್ಲ. ನಿಮಗೆ ಸೌಕರ್ಯವಾದಂತೆ ಧರಿಸಿ; ಸಾಧ್ಯವಾದಷ್ಟು ಈ ಸಲಹೆಗಳೊಂದಿಗೆ ಹೊಂದಾಣಿಕೆ ಮಾಡಿಕೊಳ್ಳಿ.</p><ul><li><strong>ನಿಶ್ಚಯಾರ್ಪಣೆ ಮತ್ತು ಸಂಗೀತ:</strong> ಇಂಡೋ-ವೆಸ್ಟರ್ನ್</li><li><strong>ಮದುವೆ ಮಂಗಳ:</strong> ಸಾಂಪ್ರದಾಯಿಕ (ಎಥ್ನಿಕ್)</li><li><strong>ಸ್ವಾಗತ ಸಮಾರಂಭ:</strong> ಔಪಚಾರಿಕ (ಫಾರ್ಮಲ್)</li></ul>',
 
     forLadke: 'ಹುಡುಗನ ಕಡೆಗೆ',
     forLadki: 'ಹುಡುಗಿಯ ಕಡೆಗೆ',
@@ -303,7 +303,7 @@ const TRANSLATIONS = {
     time: 'समय',
     venueLabel: 'स्थल',
 
-    dressNote: 'दुनों परिवार कपड़ा के बिसेस सोचत बानी।<br>जल्दी इहाँ छोट गाइड लागी।',
+    dressNote: '<p>हर कार्यक्रम खातिर हल्का सुझाव बा — ई कोनो जबरदस्त नियम नइखे। जेहन रउआ के ठीक लागे पहिनीं; जितना हो सके ई सुझाव से मिलावल के कोशिश करीं।</p><ul><li><strong>सगाई आ संगीत:</strong> इंडो-वेस्टर्न</li><li><strong>बियाह विधि:</strong> पारंपरिक परिधान (एथनिक)</li><li><strong>स्वागत:</strong> औपचारिक (फॉर्मल)</li></ul>',
 
     forLadke: 'लइका वाला खातिर',
     forLadki: 'लइकी वाला खातिर',
