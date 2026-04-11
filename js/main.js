@@ -15,7 +15,7 @@ function getStoredLang() {
 }
 
 function getInitialLang() {
-  if (typeof window === 'undefined' || !window.location || !window.location.search) return getStoredLang();
+  if (typeof window === 'undefined' || !window.location) return getStoredLang();
   const params = new URLSearchParams(window.location.search);
   const langParam = params.get('lang');
   if (langParam && LANG_CODES.includes(langParam.trim())) {
@@ -24,6 +24,17 @@ function getInitialLang() {
     return lang;
   }
   return getStoredLang();
+}
+
+/** Persists the chosen language in the address bar (?lang=) without reloading. */
+function syncLangQueryParam(lang) {
+  if (!LANG_CODES.includes(lang) || typeof window === 'undefined' || !window.history || !window.location) return;
+  const url = new URL(window.location.href);
+  url.searchParams.set('lang', lang);
+  const next = url.pathname + url.search + url.hash;
+  if (next !== window.location.pathname + window.location.search + window.location.hash) {
+    window.history.replaceState(null, '', next);
+  }
 }
 
 function setStoredLang(lang) {
@@ -550,6 +561,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         const lang = opt.getAttribute('data-lang');
         if (LANG_CODES.includes(lang)) {
           setStoredLang(lang);
+          syncLangQueryParam(lang);
           applyLanguage(lang);
           langDropdown.classList.remove('open');
           langToggle.setAttribute('aria-expanded', 'false');
