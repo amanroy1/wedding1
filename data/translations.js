@@ -282,7 +282,7 @@ const TRANSLATIONS = {
   },
 
   bh: {
-    loadingDefault: 'नेवता सजत बा, रउआ खातिर…',
+    loadingDefault: 'नेवता सजत बा, रउआ खातिरऽ…',
     loadingMessages: [
       'अँगना लीपत बानी…',
       'हरदी पीसत बानी…',
@@ -293,9 +293,9 @@ const TRANSLATIONS = {
       'रउआ के राह तकत बानी…'
     ],
     pageTitle: 'अमन संगे सोनाली · 25 जून 2026',
-    ogDescription: 'दू जिनगी एक होत बाड़ी, रउआ के बिना ई बेरा अधूरी बा।',
+    ogDescription: 'दू जिनगी एक हो रहल बा, रउआ के बिना ई बेरा अधूरी बा।',
 
-    introInvited: 'दू जिनगी एक राहता धरत बा, रउआ से निहोरा बा एह पवित्तर बेरा के साखी बनीऽ',
+    introInvited: 'दू जिनगी एक राह धरत बा, रउआ से निहोरा बा एह पवित्तर बेरा के साखी बनीऽ',
     introNames: 'अमन संगे सोनाली',
     hintToast: 'लाल मुहरवा छुईऽ या नीचे सरकावीऽ',
     sealLabel: 'खोलेऽ खातिर छुईऽ',
@@ -352,7 +352,7 @@ const TRANSLATIONS = {
     countdownSecs: 'सेकंड',
     countdownSec: 'सेकंड',
     countdownLeft: 'बचल बा',
-    countdownToday: 'आजु वही पावन घरी बा।',
+    countdownToday: 'आजु उहे पावन घरी हऽ।',
 
     langNameHindi: 'हिन्दी',
     langNameEnglish: 'English',
