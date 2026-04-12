@@ -27,7 +27,7 @@ const TRANSLATIONS = {
 
     ovBlessing: 'शुभ विवाह',
     ovNames: 'Aman & Sonali',
-    ovDate: '14  ·  VI  ·  MMXXVI',
+    ovDate: '25 · June · 2026',
     ovLocation: 'Bangalore, India',
 
     ganeshMantra: 'श्री गणेशाय नमः',
@@ -115,7 +115,7 @@ const TRANSLATIONS = {
 
     ovBlessing: 'शुभ विवाह',
     ovNames: 'अमन और सोनाली',
-    ovDate: '14  ·  VI  ·  MMXXVI',
+    ovDate: '25 · जून · 2026',
     ovLocation: 'बंगलौर, भारत',
 
     ganeshMantra: 'श्री गणेशाय नमः',
@@ -202,7 +202,7 @@ const TRANSLATIONS = {
 
     ovBlessing: 'ಶುಭ ವಿವಾಹ',
     ovNames: 'ಅಮನ್ ಮತ್ತು ಸೋನಾಲಿ',
-    ovDate: '14  ·  VI  ·  MMXXVI',
+    ovDate: '25 · ಜೂನ್ · 2026',
     ovLocation: 'ಬೆಂಗಳೂರು, ಭಾರತ',
 
     ganeshMantra: 'ಶ್ರೀ ಗಣೇಶಾಯ ನಮಃ',
@@ -287,7 +287,7 @@ const TRANSLATIONS = {
 
     ovBlessing: 'शुभ विवाह',
     ovNames: 'अमन अउर सोनाली',
-    ovDate: '14  ·  06  ·  2026',
+    ovDate: '25 · जून · 2026',
     ovLocation: 'बंगलौर, भारत',
 
     ganeshMantra: 'श्री गणेशाय नमः',
