@@ -19,7 +19,7 @@ const WEDDING_DATA = {
     {
       title: "Wedding Rituals",
       date: "25.06.2026",
-      time: "9 AM Onwards"
+      time: "8 AM Onwards"
     },
     {
       title: "Reception",

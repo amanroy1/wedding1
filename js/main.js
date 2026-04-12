@@ -649,11 +649,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Hero countdown: running timer to wedding day (25 June 2026, 9:00 AM IST); two parts for mobile (line1: days·hrs·mins, line2: secs)
+  // Hero countdown: running timer to wedding day (25 June 2026, 8:00 AM IST); two parts for mobile (line1: days·hrs·mins, line2: secs)
   const heroCountdownMain = document.getElementById('hero-countdown-main');
   const heroCountdownSecs = document.getElementById('hero-countdown-secs');
   if (heroCountdown && heroCountdownMain && heroCountdownSecs) {
-    const weddingDate = new Date(Date.UTC(2026, 5, 25, 3, 30, 0));
+    const weddingDate = new Date(Date.UTC(2026, 5, 25, 2, 30, 0));
     function updateCountdown() {
       const t = typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang] ? TRANSLATIONS[currentLang] : null;
       const dayL = t ? (t.countdownDay || 'day') : 'day';
