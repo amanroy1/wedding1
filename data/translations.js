@@ -44,7 +44,7 @@ const TRANSLATIONS = {
     venueLabel: 'Venue',
     venue: { name: 'Akira Orchards', line: 'Yelahanka, Bengaluru, Karnataka, India' },
 
-    dressNote: '<p>A gentle guide for each celebration — not a fixed dress code. Please wear what feels right for you, and align with these suggestions as closely as you comfortably can.</p><ul><li><strong>Engagement and Sangeet:</strong> Indo-Western</li><li><strong>Wedding rituals:</strong> Ethnic</li><li><strong>Reception:</strong> Formal</li></ul>',
+    dressNote: '<p>A gentle guide for each celebration, not a fixed dress code. Please wear what feels right for you, and align with these suggestions as closely as you comfortably can.</p><ul><li><strong>Engagement and Sangeet:</strong> Indo-Western</li><li><strong>Wedding rituals:</strong> Ethnic</li><li><strong>Reception:</strong> Formal</li></ul>',
 
     forLadke: 'For Ladke waale',
     forLadki: 'For Ladki waale',
@@ -107,7 +107,7 @@ const TRANSLATIONS = {
     pageTitle: 'अमन और सोनाली · 25 जून 2026',
     ogDescription: 'अमन और सोनाली के विवाह में आप सादर आमंत्रित हैं।',
 
-    introInvited: 'कुछ निर्णय शब्दों से पहले घटित हो जाते हैं, उसी में आपका निमंत्रण',
+    introInvited: 'निमंत्रण है आपको, एक नई शुरुआत की खुशी में शामिल होने का',
     introNames: 'अमन और सोनाली',
     hintToast: 'लाल मुहर छुएँ या नीचे सरकाएँ',
     sealLabel: 'खोलने के लिए मुहर छुएँ',
@@ -131,7 +131,7 @@ const TRANSLATIONS = {
     time: 'समय',
     venueLabel: 'स्थल',
 
-    dressNote: '<p>हर कार्यक्रम के लिए एक नरम सुझाव है — यह कोई सख्त नियम नहीं। आप जैसा चाहें वैसे पहन सकते हैं; इन सुझावों के साथ जितना संभव हो उतना मिलान रखें।</p><ul><li><strong>सगाई और संगीत:</strong> इंडो-वेस्टर्न</li><li><strong>विवाह विधि:</strong> पारंपरिक भारतीय परिधान (एथनिक)</li><li><strong>स्वागत समारोह:</strong> औपचारिक (फॉर्मल)</li></ul>',
+    dressNote: '<p>कपड़े तो बस एक बाहरी बात है, पर हर रस्म का एक अपना मिज़ाज होता है। हम चाहते हैं कि आप उसमें घुल जाएं।</p><ul><li><strong>सगाई और संगीत:</strong> इंडो-वेस्टर्न</li><li><strong>विवाह विधि:</strong> एथनिक</li><li><strong>स्वागत समारोह:</strong> फॉर्मल</li></ul>',
 
     forLadke: 'लड़के वालों के लिए',
     forLadki: 'लड़की वालों के लिए',
