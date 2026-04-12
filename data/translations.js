@@ -36,7 +36,7 @@ const TRANSLATIONS = {
     groomName: 'Aman Roy',
     groomParentLine: 'S/O Manoj Kumar Roy & Suneeta Roy',
     brideName: 'Sonali Hanchinamani',
-    brideParentLine: 'D/O Chandrashekhar H. & Nagalakshmi H.',
+    brideParentLine: 'D/O Chandrashekhar Hanchinamani & Nagalakshmi H.',
 
     seeInMap: 'See in Map',
     date: 'Date',
@@ -124,7 +124,7 @@ const TRANSLATIONS = {
     groomName: 'अमन रॉय',
     groomParentLine: 'मनोज कुमार रॉय और सुनीता रॉय के पुत्र',
     brideName: 'सोनाली हंचिनामनी',
-    brideParentLine: 'चंद्रशेखर एच. और नागलक्ष्मी एच. की पुत्री',
+    brideParentLine: 'चंद्रशेखर हंचिनामनी और नागलक्ष्मी हंचिनामनी की पुत्री',
 
     seeInMap: 'नक्शे में देखें',
     date: 'तारीख',
@@ -211,7 +211,7 @@ const TRANSLATIONS = {
     groomName: 'ಅಮನ್ ರಾಯ್',
     groomParentLine: 'ಶ್ರೀ ಮನೋಜ್ ಕುಮಾರ್ ರಾಯ್ & ಶ್ರೀಮತಿ ಸುನೀತಾ ರಾಯ್ ಅವರ ಸುಪುತ್ರ',
     brideName: 'ಸೋನಾಲಿ ಹಂಚಿನಾಮನಿ',
-    brideParentLine: 'ಶ್ರೀ ಚಂದ್ರಶೇಖರ್ ಹೆಚ್. & ಶ್ರೀಮತಿ ನಾಗಲಕ್ಷ್ಮಿ ಹೆಚ್. ಅವರ ಸುಪುತ್ರಿ',
+    brideParentLine: 'ಶ್ರೀ ಚಂದ್ರಶೇಖರ್ ಹಂಚಿನಾಮನಿ & ಶ್ರೀಮತಿ ನಾಗಲಕ್ಷ್ಮಿ ಹಂಚಿನಾಮನಿ ಅವರ ಸುಪುತ್ರಿ',
 
     seeInMap: 'ನಕ್ಷೆಯಲ್ಲಿ ನೋಡಿ',
     date: 'ದಿನಾಂಕ',
@@ -267,19 +267,20 @@ const TRANSLATIONS = {
   },
 
   bh: {
-    loadingDefault: 'रउआ खातिर नेवता तईयार हो रहल बा ',
+    loadingDefault: 'नेवता सजत बा, रउआ खातिर…',
     loadingMessages: [
-      'दिया बारत बानी…',
-      'मुहर चमकावत बानी…',
-      'शगुन उतारत बानी…',
-      'फूल बिछावत बानी…',
-      'मंत्र पढ़त बानी…',
-      'कार्ड लिखत बानी…'
+      'अँगना लीपत बानी…',
+      'हरदी पीसत बानी…',
+      'दुआरे दिया बारत बानी…',
+      'ढोलक के थाप सुनाई देत बा…',
+      'माँग भरे के बेरा आवत बा…',
+      'सेनुरा सजावत बानी…',
+      'रउआ के राह तकत बानी…'
     ],
     pageTitle: 'अमन अउर सोनाली · 25 जून 2026',
-    ogDescription: 'अमन आ सोनाली के बियाह में रउवा के दिल से नेवता देत बानी।',
+    ogDescription: 'दू जिनगी एक होत बाड़ी, रउआ के बिना ई बेरा अधूरी बा।',
 
-    introInvited: 'हम रउवा दिल से नेवता देत बानी अपन बियाह में',
+    introInvited: 'दू जिनगी एक राहता धरत बा, रउआ से निहोरा बा एह पवितर बेरा के साखी बनी',
     introNames: 'अमन अउर सोनाली',
     hintToast: 'लाल मुहरवा छुईं या नीचे सरकावीं',
     sealLabel: 'खोले खातिर छुईं',
@@ -291,33 +292,33 @@ const TRANSLATIONS = {
     ovLocation: 'बंगलौर, भारत',
 
     ganeshMantra: 'श्री गणेशाय नमः',
-    scheduleLine1: 'दू परिवार, एक मिलन — ओहि पल के रउवा आपके संग बाँटे के चाहत बानी।',
-    scheduleLineBottom: 'राउर साथ आ आशीर्वाद हमरा खातिर सब कुछ बा। ई नया सफर आपके बिना अधूरा।',
+    scheduleLine1: 'दू घर के छाँव एक अँगना में मिलत बा। एह घरी के रउआ अपने आँखि से देखीं, बस इहे बिनती बा।',
+    scheduleLineBottom: 'असीस के कवनो मोल नइखे। ऊ त देल जाला, लिहल जाला। रउआ आईं, बस एतने काफी बा।',
     groomName: 'अमन रॉय',
     groomParentLine: 'मनोज कुमार रॉय आ सुनीता रॉय के लइका',
     brideName: 'सोनाली हंचिनामनी',
-    brideParentLine: 'चंद्रशेखर एच. आ नागलक्ष्मी एच. के लइकी',
+    brideParentLine: 'चंद्रशेखर हंचिनामनी आ नागलक्ष्मी हंचिनामनी के लइकी',
 
-    seeInMap: 'नक्शा में देखीं',
+    seeInMap: 'नकसा में देखीं',
     date: 'तारीख',
     time: 'समय',
     venueLabel: 'स्थल',
 
-    dressNote: '<p>हर कार्यक्रम खातिर हल्का सुझाव बा — ई कोनो जबरदस्त नियम नइखे। जेहन रउआ के ठीक लागे पहिनीं; जितना हो सके ई सुझाव से मिलावल के कोशिश करीं।</p><ul><li><strong>सगाई आ संगीत:</strong> इंडो-वेस्टर्न</li><li><strong>बियाह विधि:</strong> पारंपरिक परिधान (एथनिक)</li><li><strong>स्वागत:</strong> औपचारिक (फॉर्मल)</li></ul>',
+    dressNote: '<p>हर रसम के आपन रंग होला। रउआ ओही रंग में आईं, कवनो बंधन नइखे, बस हमनी के रंगवा में रंगावे के कोसिस करीं।</p><ul><li><strong>सगाई आ संगीत:</strong> इंडो-वेस्टर्न</li><li><strong>बियाह विधि:</strong> एथनिक</li><li><strong>स्वागत:</strong> फॉर्मल</li></ul>',
 
     forLadke: 'लइका वाला खातिर',
     forLadki: 'लइकी वाला खातिर',
-    contactGroomLine: 'अंकित आर. से बात करीं — ',
-    contactBrideLine: 'चंद्रशेखर एच. से बात करीं — ',
+    contactGroomLine: 'अंकित आर. से बतियाईं ',
+    contactBrideLine: 'चंद्रशेखर एच. से बतियाईं ',
     call: 'कॉल',
     whatsApp: 'व्हाट्सऐप',
 
     tabSchedule: 'कार्यक्रम',
     tabEvents: 'कार्यक्रम',
-    tabAttire: 'पोशाक',
+    tabAttire: 'लुगा-फाटा',
     tabContact: 'संपर्क',
 
-    withLoveBlessings: 'दिल से आशीर्वाद',
+    withLoveBlessings: 'दिल के गहराई से, स्नेह आ असीस',
     monthYear: 'जून 2026',
     blessingKn: 'ಶುಭ ವಿವಾಹ',
     blessingHi: 'शुभ विवाह',
@@ -330,8 +331,8 @@ const TRANSLATIONS = {
     countdownMin: 'मिनट',
     countdownSecs: 'सेकंड',
     countdownSec: 'सेकंड',
-    countdownLeft: 'बचल',
-    countdownToday: 'आज वही दिन बा।',
+    countdownLeft: 'बचल बा',
+    countdownToday: 'आजु वही पावन घरी बा।',
 
     langNameHindi: 'हिन्दी',
     langNameEnglish: 'English',
@@ -340,14 +341,14 @@ const TRANSLATIONS = {
 
     ariaSchedule: 'कार्यक्रम',
     ariaContact: 'संपर्क',
-    ariaPauseMusic: 'पीछे संगीत रोकीं',
-    ariaPlayMusic: 'पीछे संगीत चलावीं',
+    ariaPauseMusic: 'पाछे के संगीत रोकीं',
+    ariaPlayMusic: 'पाछे के संगीत चलावीं',
 
     venue: { name: 'अकिरा ऑर्चर्ड्स', line: 'यलहंका, बेंगलुरु, कर्नाटक, भारत' },
     events: [
-      { title: 'सगाई आ संगीत', date: '24.06.2026', time: 'शाम 6 बजे से' },
-      { title: 'बियाह विधि', date: '25.06.2026', time: 'सुबह 9 बजे से' },
-      { title: 'स्वागत', date: '25.06.2026', time: 'दोपहर 12 बजे से' }
+      { title: 'सगाई आ संगीत संध्या', date: '24.06.2026', time: 'साँझ 6 बजे से' },
+      { title: 'बियाह विधि', date: '25.06.2026', time: 'भोरे 9 बजे से' },
+      { title: 'स्वागत समारोह', date: '25.06.2026', time: 'दुपहरिया 12 बजे से' }
     ]
   }
 };
