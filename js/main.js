@@ -26,6 +26,13 @@ function getInitialLang() {
   return getStoredLang();
 }
 
+/** True when URL has a supported `lang` query value (picker should not appear). */
+function hasValidLangQueryParam() {
+  if (typeof window === 'undefined' || !window.location) return false;
+  const raw = new URLSearchParams(window.location.search).get('lang');
+  return !!(raw && LANG_CODES.includes(raw.trim()));
+}
+
 /** Persists the chosen language in the address bar (?lang=) without reloading. */
 function syncLangQueryParam(lang) {
   if (!LANG_CODES.includes(lang) || typeof window === 'undefined' || !window.history || !window.location) return;
@@ -40,6 +47,41 @@ function syncLangQueryParam(lang) {
 function setStoredLang(lang) {
   if (!LANG_CODES.includes(lang)) return;
   document.cookie = LANG_COOKIE + '=' + lang + '; path=/; max-age=' + LANG_COOKIE_MAX_AGE + '; SameSite=Lax';
+}
+
+function selectLanguage(lang) {
+  if (!LANG_CODES.includes(lang)) return;
+  setStoredLang(lang);
+  syncLangQueryParam(lang);
+  applyLanguage(lang);
+}
+
+function onLangBootEscape(e) {
+  if (e.key === 'Escape') hideLangBootPicker();
+}
+
+function showLangBootPicker() {
+  const overlay = document.getElementById('lang-boot-overlay');
+  if (!overlay || overlay.classList.contains('lang-boot-overlay--open')) return;
+  overlay.hidden = false;
+  overlay.setAttribute('aria-hidden', 'false');
+  requestAnimationFrame(() => { overlay.classList.add('lang-boot-overlay--open'); });
+  document.body.style.overflow = 'hidden';
+  const first = overlay.querySelector('.lang-boot-btn');
+  if (first) first.focus();
+  document.addEventListener('keydown', onLangBootEscape);
+}
+
+function hideLangBootPicker() {
+  const overlay = document.getElementById('lang-boot-overlay');
+  if (!overlay) return;
+  const wasOpen = overlay.classList.contains('lang-boot-overlay--open');
+  overlay.classList.remove('lang-boot-overlay--open');
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.hidden = true;
+  document.body.style.overflow = '';
+  document.removeEventListener('keydown', onLangBootEscape);
+  if (wasOpen) document.dispatchEvent(new CustomEvent('lang-boot-closed'));
 }
 
 let currentLang = 'en';
@@ -58,6 +100,8 @@ const sealBtn   = document.getElementById('seal-btn');
 const introText = document.getElementById('intro-text');
 const heroCountdown = document.getElementById('hero-countdown');
 const hintToast = document.getElementById('hint-toast');
+/** Delay before showing the seal hint toast (cleared on seal tap). */
+let hintToastTimerId = null;
 const loading   = document.getElementById('loading');
 const barFill   = document.getElementById('bar-fill');
 const scrollBar = document.getElementById('scroll-bar');
@@ -509,9 +553,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Wire up seal button
   sealBtn.addEventListener('click', () => {
     sealTapped = true;
-    if (toastTimeoutId) {
-      clearTimeout(toastTimeoutId);
-      toastTimeoutId = null;
+    if (hintToastTimerId) {
+      clearTimeout(hintToastTimerId);
+      hintToastTimerId = null;
     }
     if (hintToast && hintToast.classList.contains('visible')) {
       hintToast.classList.remove('visible');
@@ -523,12 +567,14 @@ window.addEventListener('DOMContentLoaded', async () => {
     autoScrollHero();
   });
 
-  // Fade out loading screen
+  // Fade out loading screen; after it is gone, optional language picker (no `?lang=` in URL)
   loading.style.opacity = '0';
-  setTimeout(() => { loading.style.display = 'none'; }, 950);
+  setTimeout(() => {
+    loading.style.display = 'none';
+    if (!hasValidLangQueryParam()) showLangBootPicker();
+  }, 950);
 
-  // Show hint toast only if user hasn't tapped the seal within 3 seconds
-  let toastTimeoutId = null;
+  // Hint toast: 5s after load only when `?lang=` is set; otherwise 5s after language overlay closes
   function showHintToast() {
     if (!hintToast || sealTapped) return;
     hintToast.classList.remove('fade-out');
@@ -538,7 +584,15 @@ window.addEventListener('DOMContentLoaded', async () => {
       hintToast.classList.add('fade-out');
     }, 5000);
   }
-  toastTimeoutId = setTimeout(showHintToast, 5000);
+  function scheduleHintToast() {
+    if (hintToastTimerId) clearTimeout(hintToastTimerId);
+    hintToastTimerId = setTimeout(showHintToast, 5000);
+  }
+  if (hasValidLangQueryParam()) {
+    scheduleHintToast();
+  } else {
+    document.addEventListener('lang-boot-closed', scheduleHintToast, { once: true });
+  }
 
   // Language switcher: toggle dropdown, close on outside click or option select
   const langToggle = document.getElementById('lang-toggle');
@@ -560,14 +614,28 @@ window.addEventListener('DOMContentLoaded', async () => {
         e.stopPropagation();
         const lang = opt.getAttribute('data-lang');
         if (LANG_CODES.includes(lang)) {
-          setStoredLang(lang);
-          syncLangQueryParam(lang);
-          applyLanguage(lang);
+          selectLanguage(lang);
           langDropdown.classList.remove('open');
           langToggle.setAttribute('aria-expanded', 'false');
           langDropdown.setAttribute('aria-hidden', 'true');
         }
       });
+    });
+  }
+
+  const langBootOverlay = document.getElementById('lang-boot-overlay');
+  if (langBootOverlay) {
+    langBootOverlay.querySelectorAll('.lang-boot-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        if (LANG_CODES.includes(lang)) {
+          selectLanguage(lang);
+          hideLangBootPicker();
+        }
+      });
+    });
+    langBootOverlay.addEventListener('click', (e) => {
+      if (e.target === langBootOverlay) hideLangBootPicker();
     });
   }
 
