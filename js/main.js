@@ -403,6 +403,7 @@ function renderWeddingFromData(lang) {
         <span class="schedule-parent-line">${escapeHtml(t.brideParentLine)}</span>
       </span>
       <span class="schedule-line schedule-line-bottom">${escapeHtml(t.scheduleLineBottom)}</span>
+      ${scheduleFamiliesLineHtml(t)}
     `;
   }
   if (scheduleList) scheduleList.innerHTML = '';
@@ -432,6 +433,15 @@ function escapeHtml(s) {
   const div = document.createElement('div');
   div.textContent = s;
   return div.innerHTML;
+}
+
+/** Line below scheduleLineBottom: two bold name segments, same size as schedule-parent-line. */
+function scheduleFamiliesLineHtml(t) {
+  if (!t || t.scheduleFamiliesBold1 == null || t.scheduleFamiliesBold2 == null) return '';
+  const p1 = t.scheduleFamiliesPart1 != null ? t.scheduleFamiliesPart1 : '';
+  const p2 = t.scheduleFamiliesPart2 != null ? t.scheduleFamiliesPart2 : '';
+  const p3 = t.scheduleFamiliesPart3 != null ? t.scheduleFamiliesPart3 : '';
+  return `<span class="schedule-parent-line schedule-families-line">${escapeHtml(p1)}<strong>${escapeHtml(t.scheduleFamiliesBold1)}</strong>${escapeHtml(p2)}<strong>${escapeHtml(t.scheduleFamiliesBold2)}</strong>${escapeHtml(p3)}</span>`;
 }
 
 function getLangDisplayName(lang) {

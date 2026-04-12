@@ -649,6 +649,22 @@ html[lang="en"] #loading-text {
   margin-top: 0.5rem;
 }
 
+.schedule-families-line {
+  text-transform: none;
+  margin-top: 0.45rem;
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.65;
+  /* Parent .schedule-message uses font-weight:500; lighter base makes <strong> readable in Indic fonts */
+  font-weight: 400;
+}
+
+.schedule-families-line strong {
+  font-weight: 700;
+  color: rgba(42, 26, 12, 0.98);
+}
+
 .schedule-note {
   font-family: var(--font-wedding);
   font-size: clamp(0.9rem, 1.1vw, 1rem);
